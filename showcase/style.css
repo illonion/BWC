@@ -17,15 +17,37 @@
 }
 
 /* Replay By */
-#replayByText {
-    position: absolute; left: 45px; top: 550.08px;
-    font-family: "Aaux Next"; font-weight: 800; font-size: 26.48px;
+.replayBy {
+    position: absolute; top: 550.08px;
+    font-family: "Aaux Next"; font-size: 26.48px;
     color: white;
     letter-spacing: 1.0592px;
 }
+#replayByText {
+    left: 45px; 
+    font-weight: 800;
+}
 #replayByUsername {
-    position: absolute; top: 550.08px; right: 1373px;
-    font-family: "Aaux Next"; font-weight: 700; font-size: 26.48px;
+    right: 1373px;
+    font-weight: 700; 
+}
+
+/* Length, SR, BPM */
+#lengthSRBPMGrid {
+    position: absolute; left: 45px; top: 620px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(3, auto);
+}
+.lengthSRBPMGridItem {
+    font-family: "Aaux Next"; font-weight: 800; font-size: 26.48px;
     letter-spacing: 1.0592px;
     color: white;
+}
+.lengthSRBPMGridItem:nth-child(2n-1) {
+    width: 100px;
+}
+.lengthSRBPMGridItem:nth-child(2n) {
+    text-align: right;
+    width: 107px;
 }
