@@ -51,3 +51,23 @@
     text-align: right;
     width: 107px;
 }
+
+/* AR, CS, HP, OD*/
+#ARCSHPODGrid{
+    position: absolute; left: 445px; top: 620px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(4, auto);
+}
+.ARCSHPODGridItem {
+    font-family: "Aaux Next"; font-weight: 800; font-size: 26.48px;
+    letter-spacing: 1.0592px;
+    color: white;
+}
+.ARCSHPODGridItem:nth-child(2n-1) {
+    width: 35px;
+}
+.ARCSHPODGridItem:nth-child(2n) {
+    text-align: right;
+    width: 50px;
+}
