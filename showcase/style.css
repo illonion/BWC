@@ -111,3 +111,9 @@
     letter-spacing: 7.7392px;
 }
 .difficultyAlign { left: 529px; }
+#mapperName {
+    width: 440px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
