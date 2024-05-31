@@ -1,5 +1,6 @@
 :root {
     --titleColor: #00AEB7;
+    --mapperDifficultyColor: #E66C49;
 }
 
 /* Fonts */
@@ -91,4 +92,21 @@
     top: 893.19px;
     font-family: "Aaux Next Italic"; font-size: 42.49px;
     letter-spacing: 6.7984px;
+}
+
+/* Mapper */
+.mapperDifficultyInformation {
+    position: absolute; 
+    color: var(--mapperDifficultyColor);
+    font-family: "Aaux Next"; font-weight: 800;
+}
+#mapperText {
+    top: 964px;
+    font-size: 26.21px;
+    letter-spacing: 4.1936px;
+}
+#mapperName {
+    top: 989.59px;
+    font-size: 48.37px;
+    letter-spacing: 7.7392px;
 }
