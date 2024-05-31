@@ -1,0 +1,12 @@
+@font-face {
+    font-family: "Aaux Next";
+    font-weight: 800;
+    src: url("../fonts/Aaux\ Next\ Bold.otf")
+}
+
+#main {
+    position: absolute; left: 0; top: 0;
+    width: 1920px; height: 1080px;
+    background-image: url("static/background.png");
+    background-size: cover;
+}
