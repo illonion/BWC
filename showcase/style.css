@@ -3,10 +3,29 @@
     font-weight: 800;
     src: url("../fonts/Aaux\ Next\ Bold.otf")
 }
+@font-face {
+    font-family: "Aaux Next";
+    font-weight: 700;
+    src: url("../fonts/Aaux\ Next\ SemiBold.otf");
+}
 
 #main {
     position: absolute; left: 0; top: 0;
     width: 1920px; height: 1080px;
     background-image: url("static/background.png");
     background-size: cover;
+}
+
+/* Replay By */
+#replayByText {
+    position: absolute; left: 45px; top: 550.08px;
+    font-family: "Aaux Next"; font-weight: 800; font-size: 26.48px;
+    color: white;
+    letter-spacing: 1.0592px;
+}
+#replayByUsername {
+    position: absolute; top: 550.08px; right: 1373px;
+    font-family: "Aaux Next"; font-weight: 700; font-size: 26.48px;
+    letter-spacing: 1.0592px;
+    color: white;
 }
