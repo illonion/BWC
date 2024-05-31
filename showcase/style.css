@@ -100,13 +100,14 @@
     color: var(--mapperDifficultyColor);
     font-family: "Aaux Next"; font-weight: 800;
 }
-#mapperText {
+.mapperDifficultyText {
     top: 964px;
     font-size: 26.21px;
     letter-spacing: 4.1936px;
 }
-#mapperName {
+.mapperDifficultyName {
     top: 989.59px;
     font-size: 48.37px;
     letter-spacing: 7.7392px;
 }
+.difficultyAlign { left: 529px; }

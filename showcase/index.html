@@ -6,6 +6,8 @@
     <title>Showcase</title>
 
     <link rel="stylesheet" href="style.css">
+
+    <script src="../_shared/deps/reconnecting-websocket.min.js"></script>
 </head>
 <body>
     <div id="main">
@@ -15,24 +17,24 @@
 
         <!-- Length, SR, BPM -->
         <section class="leftElementsAlign" id="lengthSRBPMGrid">
-            <div class="statsFont lengthSRBPMGridItem" id="">LENGTH</div>
-            <div class="statsFont lengthSRBPMGridItem" id="">88:88</div>
-            <div class="statsFont lengthSRBPMGridItem" id="">SR</div>
-            <div class="statsFont lengthSRBPMGridItem" id="">88.88</div>
-            <div class="statsFont lengthSRBPMGridItem" id="">BPM</div>
-            <div class="statsFont lengthSRBPMGridItem" id="">888</div>
+            <div class="statsFont lengthSRBPMGridItem">LENGTH</div>
+            <div class="statsFont lengthSRBPMGridItem" id="statsLength">88:88</div>
+            <div class="statsFont lengthSRBPMGridItem">SR</div>
+            <div class="statsFont lengthSRBPMGridItem" id="statsSR">88.88</div>
+            <div class="statsFont lengthSRBPMGridItem">BPM</div>
+            <div class="statsFont lengthSRBPMGridItem" id="statsBPM">888</div>
         </section>
 
         <!-- AR, CS, HP, OD -->
         <section id="ARCSHPODGrid">
-            <div class="statsFont ARCSHPODGridItem" id="">AR</div>
-            <div class="statsFont ARCSHPODGridItem" id="">10.3</div>
-            <div class="statsFont ARCSHPODGridItem" id="">CS</div>
-            <div class="statsFont ARCSHPODGridItem" id="">10.3</div>
-            <div class="statsFont ARCSHPODGridItem" id="">HP</div>
-            <div class="statsFont ARCSHPODGridItem" id="">10.3</div>
-            <div class="statsFont ARCSHPODGridItem" id="">OD</div>
-            <div class="statsFont ARCSHPODGridItem" id="">10.3</div>
+            <div class="statsFont ARCSHPODGridItem">AR</div>
+            <div class="statsFont ARCSHPODGridItem" id="statsAR">10.3</div>
+            <div class="statsFont ARCSHPODGridItem">CS</div>
+            <div class="statsFont ARCSHPODGridItem" id="statsCS">10.3</div>
+            <div class="statsFont ARCSHPODGridItem">HP</div>
+            <div class="statsFont ARCSHPODGridItem" id="statsHP">10.3</div>
+            <div class="statsFont ARCSHPODGridItem">OD</div>
+            <div class="statsFont ARCSHPODGridItem" id="statsOD">10.3</div>
         </section>
 
         <!-- Title -->
@@ -41,8 +43,12 @@
         <div class="leftElementsAlign titleInformation" id="artistName">Artist Name</div>
 
         <!-- Mapper -->
-        <div class="leftElementsAlign mapperDifficultyInformation" id="mapperText">MAPPER</div>
-        <div class="leftElementsAlign mapperDifficultyInformation" id="mapperName">Username</div>
+        <div class="leftElementsAlign mapperDifficultyInformation mapperDifficultyText" id="mapperText">MAPPER</div>
+        <div class="leftElementsAlign mapperDifficultyInformation mapperDifficultyName" id="mapperName">Username</div>
+
+        <!-- Difficulty -->
+        <div class="difficultyAlign mapperDifficultyInformation mapperDifficultyText" id="difficultyText">DIFFICULTY</div>
+        <div class="difficultyAlign mapperDifficultyInformation mapperDifficultyName" id="difficultyName">Long Difficulty Name</div>
     </div>
 
     <script src="index.js"></script>
