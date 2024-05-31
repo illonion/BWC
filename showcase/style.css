@@ -1,7 +1,17 @@
+:root {
+    --titleColor: #00AEB7;
+}
+
+/* Fonts */
 @font-face {
     font-family: "Aaux Next";
     font-weight: 800;
     src: url("../fonts/Aaux\ Next\ Bold.otf")
+}
+@font-face {
+    font-family: "Aaux Next Italic";
+    font-weight: 800;
+    src: url("../fonts/Aaux\ Next\ Bold\ Italic.otf")
 }
 @font-face {
     font-family: "Aaux Next";
@@ -9,6 +19,7 @@
     src: url("../fonts/Aaux\ Next\ SemiBold.otf");
 }
 
+/* Whole Page */
 #main {
     position: absolute; left: 0; top: 0;
     width: 1920px; height: 1080px;
@@ -16,17 +27,17 @@
     background-size: cover;
 }
 
-/* Replay By */
-.replayBy {
-    position: absolute; top: 550.08px;
+/* Helper method */
+.statsFont {
     font-family: "Aaux Next"; font-size: 26.48px;
     color: white;
     letter-spacing: 1.0592px;
 }
-#replayByText {
-    left: 45px; 
-    font-weight: 800;
-}
+.leftElementsAlign { left: 45px; }
+
+/* Replay By */
+.replayBy { position: absolute; top: 550.08px; }
+#replayByText { font-weight: 800; }
 #replayByUsername {
     right: 1373px;
     font-weight: 700; 
@@ -34,19 +45,13 @@
 
 /* Length, SR, BPM */
 #lengthSRBPMGrid {
-    position: absolute; left: 45px; top: 620px;
+    position: absolute; top: 620px;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(3, auto);
 }
-.lengthSRBPMGridItem {
-    font-family: "Aaux Next"; font-weight: 800; font-size: 26.48px;
-    letter-spacing: 1.0592px;
-    color: white;
-}
-.lengthSRBPMGridItem:nth-child(2n-1) {
-    width: 100px;
-}
+.lengthSRBPMGridItem { font-weight: 800; }
+.lengthSRBPMGridItem:nth-child(2n-1) { width: 100px; }
 .lengthSRBPMGridItem:nth-child(2n) {
     text-align: right;
     width: 107px;
@@ -59,15 +64,31 @@
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(4, auto);
 }
-.ARCSHPODGridItem {
-    font-family: "Aaux Next"; font-weight: 800; font-size: 26.48px;
-    letter-spacing: 1.0592px;
-    color: white;
-}
-.ARCSHPODGridItem:nth-child(2n-1) {
-    width: 35px;
-}
+.ARCSHPODGridItem { font-weight: 800; }
+.ARCSHPODGridItem:nth-child(2n-1) { width: 35px; }
 .ARCSHPODGridItem:nth-child(2n) {
     text-align: right;
     width: 50px;
+}
+
+/* Title Information */
+.titleInformation {
+    position: absolute; 
+    color: var(--titleColor);
+    font-family: "Aaux Next"; font-weight: 800; 
+}
+#titleText {
+    top: 805px;
+    font-size: 26.21px;
+    letter-spacing: 4.1936px;
+}
+#titleName {
+    top: 830.59px;
+    font-size: 48.37px;
+    letter-spacing: 7.7392px;
+}
+#artistName {
+    top: 893.19px;
+    font-size: 42.49px;
+    letter-spacing: 6.7984px;
 }
