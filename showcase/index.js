@@ -1,7 +1,6 @@
 // Round Names
 const roundTextYellowEl = document.getElementById("roundTextYellow")
 const roundTextBlackEl = document.getElementById("roundTextBlack")
-const roundTextMaxWidth = 510
 let roundName
 let allBeatmaps
 
@@ -14,21 +13,24 @@ async function getMappool() {
     roundName = responseJson.roundName.toUpperCase()
     roundTextYellowEl.innerText = roundName
     roundTextBlackEl.innerText = roundName
-    setLetterSize(roundTextYellowEl)
-    setLetterSize(roundTextBlackEl)
+    setLetterSpacing(roundTextYellowEl)
+    setLetterSpacing(roundTextBlackEl)
 
     // Set beatmaps
     allBeatmaps = responseJson.beatmaps
 }
 
-function setLetterSize(element) {
+// Set letter
+const roundTextMaxWidth = 510
+const roundTextMaxMarginError = 0.5
+function setLetterSpacing(element) {
     let currentLetterSpacing = window.getComputedStyle(element).getPropertyValue("letter-spacing").slice(0,-2)
     let currentLetterSpacingConditionMet = false
     while (!currentLetterSpacingConditionMet) {
-        if (element.getBoundingClientRect().width > roundTextMaxWidth + 1) {
+        if (element.getBoundingClientRect().width > roundTextMaxWidth + roundTextMaxMarginError) {
             currentLetterSpacing -= 0.01
             element.style.letterSpacing = `${currentLetterSpacing}px`
-        } else if (element.getBoundingClientRect().width < roundTextMaxWidth - 1) {
+        } else if (element.getBoundingClientRect().width < roundTextMaxWidth - roundTextMaxMarginError) {
             currentLetterSpacing += 0.01
             element.style.letterSpacing = `${currentLetterSpacing}px`
         } else {
@@ -38,6 +40,9 @@ function setLetterSize(element) {
 }
 
 getMappool()
+
+// Find map in mappol
+const findMapInMappool = (beatmapID) => allBeatmaps.find(beatmap => beatmap.beatmapID == beatmapID) || null
 
 // Socket Events
 // Credits: VictimCrasher - https://github.com/VictimCrasher/static/tree/master/WaveTournament
@@ -62,6 +67,10 @@ const statsCSEl = document.getElementById("statsCS")
 const statsHPEl = document.getElementById("statsHP")
 const statsODEl = document.getElementById("statsOD")
 
+// Replay by username
+const replayByUsernameEl = document.getElementById("replayByUsername")
+let replayByUsername
+
 socket.onmessage = async (event) => {
     const data = JSON.parse(event.data)   
     console.log(data)
@@ -70,11 +79,36 @@ socket.onmessage = async (event) => {
     if (currentId !== data.menu.bm.id || currentMd5 !== data.menu.bm.md5) {
         currentId = data.menu.bm.id
         currentMd5 = data.menu.bm.md5
+        foundMapInMappool = false
 
         titleNameEl.innerText = data.menu.bm.metadata.title
         artistNameEl.innerText = data.menu.bm.metadata.artist
         mapperNameEl.innerText = data.menu.bm.metadata.mapper
         difficultyNameEl.innerText = data.menu.bm.metadata.difficulty
+
+        const currentMap = findMapInMappool(currentId)
+        if (currentMap) {
+            foundMapInMappool = true
+
+            // Set map details for everything
+            // Length
+            let lengthSeconds = parseInt(currentMap.songLength)
+            let lengthMinutes = Math.floor(lengthSeconds / 60)
+            let remainderSeconds = lengthSeconds % 60
+            statsLengthEl.innerText = `${lengthMinutes}:${("0" + remainderSeconds.toString()).slice(-2)}`
+            // SR
+            statsSREl.innerText = Math.round(parseFloat(currentMap.difficultyrating) * 100) / 100
+            // BPM
+            statsBPMEl.innerText = parseFloat(currentMap.bpm)
+            // AR
+            statsAREl.innerText = Math.round(parseFloat(currentMap.ar) * 10) / 10
+            // CS
+            statsCSEl.innerText = Math.round(parseFloat(currentMap.cs) * 10) / 10
+            // HP
+            statsHPEl.innerText = Math.round(parseFloat(currentMap.hp) * 10) / 10
+            // OD
+            statsODEl.innerText = Math.round(parseFloat(currentMap.od) * 10) / 10
+        }
     }
     // Stats
     if (!foundMapInMappool) {
@@ -87,11 +121,20 @@ socket.onmessage = async (event) => {
         statsSREl.innerText = data.menu.bm.stats.fullSR
         // BPM
         statsBPMEl.innerText = data.menu.bm.stats.BPM.common
+        // AR
+        statsAREl.innerText = data.menu.bm.stats.AR
         // CS
         statsCSEl.innerText = data.menu.bm.stats.CS
         // HP
         statsHPEl.innerText = data.menu.bm.stats.HP
         // OD
         statsODEl.innerText = data.menu.bm.stats.OD
+    }
+
+    // Replay by username
+    console.log(data.resultsScreen.name, replayByUsername)
+    if (replayByUsername !== data.resultsScreen.name) {
+        replayByUsername = data.resultsScreen.name
+        replayByUsernameEl.innerText = replayByUsername.toUpperCase()
     }
 }

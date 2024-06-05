@@ -109,6 +109,12 @@
     font-size: 26.21px;
     letter-spacing: 4.1936px;
 }
+.titleArtistName {
+    white-space: nowrap;
+    width: 1830px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 #titleName {
     top: 830.59px;
     font-size: 48.37px;
