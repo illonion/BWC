@@ -1,3 +1,44 @@
+// Round Names
+const roundTextYellowEl = document.getElementById("roundTextYellow")
+const roundTextBlackEl = document.getElementById("roundTextBlack")
+const roundTextMaxWidth = 510
+let roundName
+let allBeatmaps
+
+// Load in mappool
+async function getMappool() {
+    const response = await fetch("../_data/showcaseBeatmaps.json")
+    const responseJson = await response.json()
+
+    // Round name
+    roundName = responseJson.roundName.toUpperCase()
+    roundTextYellowEl.innerText = roundName
+    roundTextBlackEl.innerText = roundName
+    setLetterSize(roundTextYellowEl)
+    setLetterSize(roundTextBlackEl)
+
+    // Set beatmaps
+    allBeatmaps = responseJson.beatmaps
+}
+
+function setLetterSize(element) {
+    let currentLetterSpacing = window.getComputedStyle(element).getPropertyValue("letter-spacing").slice(0,-2)
+    let currentLetterSpacingConditionMet = false
+    while (!currentLetterSpacingConditionMet) {
+        if (element.getBoundingClientRect().width > roundTextMaxWidth + 1) {
+            currentLetterSpacing -= 0.01
+            element.style.letterSpacing = `${currentLetterSpacing}px`
+        } else if (element.getBoundingClientRect().width < roundTextMaxWidth - 1) {
+            currentLetterSpacing += 0.01
+            element.style.letterSpacing = `${currentLetterSpacing}px`
+        } else {
+            currentLetterSpacingConditionMet = true
+        }
+    }
+}
+
+getMappool()
+
 // Socket Events
 // Credits: VictimCrasher - https://github.com/VictimCrasher/static/tree/master/WaveTournament
 const socket = new ReconnectingWebSocket("ws://" + location.host + "/ws")
