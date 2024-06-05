@@ -36,6 +36,32 @@
 }
 .leftElementsAlign { left: 45px; }
 
+/* Round Texts */
+.roundText {
+    font-family: "Aaux Next"; font-size: 82.99px; font-weight: 800;
+    position: absolute; left: 42px;
+    letter-spacing: 5.81px;
+}
+#roundTextYellow {
+    top: 365px;
+    color: #DDC033;
+}
+#roundTextBlack {
+    top: 390px;
+}
+
+/* Mappool Showcase Text Container */
+#mappoolShowcaseTextContainer {
+    position: absolute; top: 329px;
+    background-color: #E66C49;
+    width: 465px; height: 72px;
+}
+#mappoolShowcaseText {
+    position: absolute; left: 111px; top: 340px;
+    font-family: "Aaux Next"; font-weight: 800;
+    font-size: 35px; letter-spacing: 5.6px;
+}
+
 /* Replay By */
 .replayBy { position: absolute; top: 550.08px; }
 #replayByText { font-weight: 800; }
