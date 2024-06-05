@@ -122,13 +122,13 @@ socket.onmessage = async (event) => {
         // BPM
         statsBPMEl.innerText = data.menu.bm.stats.BPM.common
         // AR
-        statsAREl.innerText = data.menu.bm.stats.AR
+        statsAREl.innerText = Math.round(parseFloat(data.menu.bm.stats.AR) * 10) / 10
         // CS
-        statsCSEl.innerText = data.menu.bm.stats.CS
+        statsCSEl.innerText = Math.round(parseFloat(data.menu.bm.stats.CS) * 10) / 10
         // HP
-        statsHPEl.innerText = data.menu.bm.stats.HP
+        statsHPEl.innerText = Math.round(parseFloat(data.menu.bm.stats.HP) * 10) / 10
         // OD
-        statsODEl.innerText = data.menu.bm.stats.OD
+        statsODEl.innerText = Math.round(parseFloat(data.menu.bm.stats.OD) * 10) / 10
     }
 
     // Replay by username
