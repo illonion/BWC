@@ -132,7 +132,6 @@ socket.onmessage = async (event) => {
     }
 
     // Replay by username
-    console.log(data.resultsScreen.name, replayByUsername)
     if (replayByUsername !== data.resultsScreen.name) {
         replayByUsername = data.resultsScreen.name
         replayByUsernameEl.innerText = replayByUsername.toUpperCase()
