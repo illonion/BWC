@@ -20,6 +20,9 @@
     src: url("../fonts/Aaux\ Next\ SemiBold.otf");
 }
 
+/* Background Video */
+#bgVideo { position: absolute; left: 0; top: 0; }
+
 /* Whole Page */
 #main {
     position: absolute; left: 0; top: 0;
@@ -96,6 +99,13 @@
 .ARCSHPODGridItem:nth-child(2n) {
     text-align: right;
     width: 50px;
+}
+
+/* Osu Gameplay Border Box */
+#osuGameplayBorderBox {
+    position: absolute; left: 593px; top: 40px;
+    width: 1243px; height: 699px;
+    border: 20px solid white;
 }
 
 /* Title Information */

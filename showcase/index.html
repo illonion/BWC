@@ -10,6 +10,9 @@
     <script src="../_shared/deps/reconnecting-websocket.min.js"></script>
 </head>
 <body>
+    <video id="bgVideo" autoplay loop muted playbackRate=0.3>
+        <source src="static/showcase.mp4" type="video/mp4">
+    </video>
     <div id="main">
         <!-- Round Text -->
         <div class="roundText" id="roundTextYellow">QUALIFIERS</div>
@@ -44,6 +47,8 @@
             <div class="statsFont ARCSHPODGridItem">OD</div>
             <div class="statsFont ARCSHPODGridItem" id="statsOD">10.3</div>
         </section>
+
+        <div id="osuGameplayBorderBox"></div>
 
         <!-- Title -->
         <div class="leftElementsAlign titleInformation" id="titleText">TITLE</div>

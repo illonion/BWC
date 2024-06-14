@@ -24,7 +24,7 @@ async function getMappool() {
 const roundTextMaxWidth = 510
 const roundTextMaxMarginError = 0.5
 function setLetterSpacing(element) {
-    let currentLetterSpacing = window.getComputedStyle(element).getPropertyValue("letter-spacing").slice(0,-2)
+    let currentLetterSpacing = parseFloat(window.getComputedStyle(element).getPropertyValue("letter-spacing").slice(0,-2))
     let currentLetterSpacingConditionMet = false
     while (!currentLetterSpacingConditionMet) {
         if (element.getBoundingClientRect().width > roundTextMaxWidth + roundTextMaxMarginError) {
