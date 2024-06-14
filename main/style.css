@@ -4,18 +4,23 @@
 
 @font-face {
     font-family: "Aaux Next";
+    font-weight: 700;
+    src: url("../fonts/Aaux\ Next\ SemiBold.otf");
+}
+@font-face {
+    font-family: "Aaux Next";
     font-weight: 800;
     src: url("../fonts/Aaux\ Next\ Bold.otf")
+}
+@font-face {
+    font-family: "Aaux Next";
+    font-weight: 900;
+    src: url("../fonts/Aaux\ Next\ Black.otf");
 }
 @font-face {
     font-family: "Aaux Next Italic";
     font-weight: 800;
     src: url("../fonts/Aaux\ Next\ Bold\ Italic.otf")
-}
-@font-face {
-    font-family: "Aaux Next";
-    font-weight: 700;
-    src: url("../fonts/Aaux\ Next\ SemiBold.otf");
 }
 
 .leftAlign { left: 58px; }
@@ -85,3 +90,34 @@
     letter-spacing: 11.52px;
 }
 #blueTeamScoreNumber { right: 46.48px; }
+
+/* Team Score Number Delta */
+#teamScoreNumberDelta {
+    position: absolute; left: 50%; top: 914px;
+    transform: translateX(-50%);
+    font-family: "Aaux Next"; font-weight: 800; font-size: 22px;
+}
+
+/* Map Box Container */
+#mapBoxContainer {
+    position: absolute; left: 50%; top: 965px;
+    transform: translateX(-50%);
+    width: 718px; height: 52px;
+}
+#mapBoxContainerLayer {
+    position: absolute; left: 0; top: 0;
+    width: 100%; height: 100%;
+    background-color: rgba(0,0,0,0.65)
+}
+#mapBoxContainerText {
+    position: absolute; left: 50%;
+    transform: translateX(-50%);
+    color: white;
+    font-family: "Aaux Next"; font-weight: 900; font-size: 37px;
+    letter-spacing: 4.81px;
+}
+#mapBoxContainerText::before {
+    content: "";
+    display: inline-block;
+    width: 2.405px;
+}
