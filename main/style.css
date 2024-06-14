@@ -54,3 +54,17 @@
     border-radius: 12.5px;
 }
 .teamStarFill { background-color: var(--starColour); }
+
+/* Round Name */
+#roundName {
+    position: absolute; left: 50%; top: 86px;
+    transform: translateX(-50%);
+    font-family: "Aaux Next"; font-weight: 800; font-size: 22px;
+    letter-spacing: 8.58px;
+    text-align: center;
+}
+#roundName::before {
+    content: "";
+    display: inline-block;
+    width: 8.29px;
+}
