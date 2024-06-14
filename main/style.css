@@ -1,3 +1,7 @@
+:root {
+    --starColour: #262626;
+}
+
 @font-face {
     font-family: "Aaux Next";
     font-weight: 800;
@@ -21,3 +25,32 @@
     background-size: cover;
     background-image: url("static/background.png");
 }
+
+/* Team Name */
+.teamName {
+    position: absolute; top: 22px;
+    font-family: "Aaux Next"; font-weight: 800; font-size: 35px;
+    letter-spacing: 5.6px;
+}
+#redTeamName { left: 58px; }
+#blueTeamName { right: 52.5px; }
+
+/* Team Stars Container */
+.teamStars {
+    position: absolute; top: 77px;
+    border-radius: 12.5px;
+    display: flex;
+}
+#redTeamStars { left: 42px; }
+#blueTeamStars {
+    right: 42px; top: 77px;
+    flex-direction: row-reverse
+}
+/* Team Stars */
+.teamStar {
+    width: 25px; height: 25px;
+    margin: 0 16px;
+    box-shadow: inset 0 0 0 6px var(--starColour);
+    border-radius: 12.5px;
+}
+.teamStarFill { background-color: var(--starColour); }
