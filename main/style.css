@@ -18,6 +18,8 @@
     src: url("../fonts/Aaux\ Next\ SemiBold.otf");
 }
 
+.leftAlign { left: 58px; }
+
 /* Whole Page */
 #main {
     position: absolute; left: 0; top: 0;
@@ -32,7 +34,6 @@
     font-family: "Aaux Next"; font-weight: 800; font-size: 35px;
     letter-spacing: 5.6px;
 }
-#redTeamName { left: 58px; }
 #blueTeamName { right: 52.5px; }
 
 /* Team Stars Container */
@@ -68,3 +69,19 @@
     display: inline-block;
     width: 8.29px;
 }
+
+/* Team Score Texts */
+/* Team Score Text */
+.teamScoreText {
+    position: absolute; top: 935px;
+    font-family: "Aaux Next"; font-weight: 800; font-size: 27px;
+    letter-spacing: 4.32px;
+}
+#blueTeamScoreText { right: 53.68px; }
+/* Team Score Number */
+.teamScoreNumber {
+    position: absolute; top: 955px;
+    font-family: "Aaux Next"; font-weight: 800; font-size: 72px;
+    letter-spacing: 11.52px;
+}
+#blueTeamScoreNumber { right: 46.48px; }
