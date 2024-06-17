@@ -15,6 +15,9 @@ async function getMappool() {
 
 getMappool()
 
+// Find map in mappool
+const findMapInMappool = beatmapID => allBeatmaps.find(map => map.beatmapID === beatmapID)
+
 // Socket Events
 // Credits: VictimCrasher - https://github.com/VictimCrasher/static/tree/master/WaveTournament
 const socket = new ReconnectingWebSocket("ws://" + location.host + "/ws")
@@ -226,13 +229,26 @@ socket.onmessage = async (event) => {
     }
 
     // Beatmap information
-    if (currentId !== data.menu.bm.id || currentMd5 !== data.menu.bm.md5) {
+    if (currentId !== data.menu.bm.id || currentMd5 !== data.menu.bm.md5 && allBeatmaps) {
         currentId = data.menu.bm.id
         currentMd5 = data.menu.bm.md5
+        foundMapInMappool = false
 
         mapBoxContainerEl.style.backgroundImage = `url("https://assets.ppy.sh/beatmaps/${data.menu.bm.set}/covers/cover.jpg")`
         mapBoxContainerTextEl.innerText = ""
         songNameEl.innerText = `${data.menu.bm.metadata.artist} - ${data.menu.bm.metadata.title}`
+
+        const currentMap = findMapInMappool(currentId)
+        if (currentMap) {
+            foundMapInMappool = true
+            mapBoxContainerTextEl.innerText = `${currentMap.mod}${currentMap.order}`
+            songStatsSREl.innerText = Math.round(parseFloat(currentMap.difficultyrating) * 100) / 100
+            songStatsAREl.innerText = Math.round(parseFloat(currentMap.ar) * 10) / 10
+            songStatsCSEl.innerText = Math.round(parseFloat(currentMap.cs) * 10) / 10
+            songStatsODEl.innerText = Math.round(parseFloat(currentMap.od) * 10) / 10
+            songStatsBPMEl.innerText = Math.round(parseFloat(currentMap.bpm))
+            displayLength(currentMap.songLength)
+        }
     }
 
     if (!foundMapInMappool) {
@@ -241,11 +257,12 @@ socket.onmessage = async (event) => {
         songStatsCSEl.innerText = data.menu.bm.stats.CS
         songStatsODEl.innerText = data.menu.bm.stats.OD
         songStatsBPMEl.innerText = data.menu.bm.stats.BPM.common
-
-        // Length
-        const songLength = Math.round(data.menu.bm.time.full / 1000)
-        const minutes = Math.floor(songLength / 60)
-        const seconds = Math.floor(songLength % 60).toString().padStart(2, '0')
-        songStatLENsEl.innerText = `${minutes}:${seconds}`
+        displayLength(Math.round(data.menu.bm.time.full / 1000))
     }
+}
+
+function displayLength(songLength) {
+    const minutes = Math.floor(songLength / 60)
+    const seconds = Math.floor(songLength % 60).toString().padStart(2, '0')
+    songStatLENsEl.innerText = `${minutes}:${seconds}`
 }
