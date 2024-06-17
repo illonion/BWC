@@ -98,9 +98,16 @@
     font-family: "Aaux Next"; font-weight: 800; font-size: 22px;
 }
 
+/* Moving Score Bar */
+#redTeamMovingScoreBar {
+    position: absolute; right: 50%; top: 881px;
+    width: 652px; height: 33px;
+    background-color: #262626;
+}
+
 /* Map Box Container */
 #mapBoxContainer {
-    position: absolute; left: 50%; top: 965px;
+    position: absolute; left: 50%; top: 955px;
     transform: translateX(-50%);
     width: 718px; height: 52px;
 }
@@ -121,3 +128,16 @@
     display: inline-block;
     width: 2.405px;
 }
+
+/* Song Name */
+.songNameStats {
+    position: absolute; left: 50%; 
+    transform: translateX(-50%);
+    font-family: "Aaux Next"; font-weight: 800; font-size: 22px;
+}
+#songName { top: 1010px; }
+#songStats {
+    top: 1040px;
+    display: flex;
+}
+#songStats > * { margin: 0 25px; }
