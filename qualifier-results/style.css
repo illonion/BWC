@@ -1,0 +1,40 @@
+/* Fonts */
+@font-face {
+    font-family: "Aaux Next";
+    font-weight: 800;
+    src: url("../fonts/Aaux\ Next\ Bold.otf")
+}
+@font-face {
+    font-family: "Aaux Next Italic";
+    font-weight: 800;
+    src: url("../fonts/Aaux\ Next\ Bold\ Italic.otf")
+}
+@font-face {
+    font-family: "Aaux Next";
+    font-weight: 700;
+    src: url("../fonts/Aaux\ Next\ SemiBold.otf");
+}
+
+/* Whole Page */
+#main {
+    position: absolute; left: 0; top: 0;    
+    width: 1920px; height: 1080px;
+    background-image: url("static/background.png");
+    background-size: cover;
+}
+
+/* Team Information */
+#teamBanner {
+    position: absolute; left: 40px; top: 195px;
+    width: 347px; height: 168px;
+    background-color: #86C158;
+}
+.teamInformation {
+    position: absolute; 
+    font-family: "Aaux Next"; font-size: 72px; font-weight: 800;
+}
+#teamName {
+    left: 439px; top: 176px;
+    letter-spacing: 11.52px;
+}
+#teamSeed { left: 439px; top: 260px; }
