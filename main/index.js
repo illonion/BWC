@@ -43,13 +43,45 @@ let currentScoreRed, currentScoreBlue, currentScoreDelta
 const scoreAnimation = {
     redTeamScoreNumber: new CountUp("redTeamScoreNumber", 0, 0, 0, 0.2, { useEasing: true, useGrouping: true, separator: "", decimal: "." }),
     blueTeamScoreNumber: new CountUp("blueTeamScoreNumber", 0, 0, 0, 0.2, { useEasing: true, useGrouping: true, separator: "", decimal: "." }),
-    teamScoreNumberDelta: new CountUp("teamScoreNumberDelta", 0, 0, 0, 0.2, { useEasing: true, useGrouping: true, separator: "", decimal: "." })
+    teamScoreNumberDelta: new CountUp("teamScoreNumberDelta", 0, 0, 0, 0.2, { useEasing: true, useGrouping: true, separator: "", decimal: "." }),
+    redTeamAccuracyNumber: new CountUp("redTeamAccuracyNumber", 0, 0, 2, 0.2, { useEasing: true, useGrouping: true, separator: "", decimal: ".", suffix: "%"}),
+    blueTeamAccuracyNumber: new CountUp("blueTeamAccuracyNumber", 0, 0, 2, 0.2, { useEasing: true, useGrouping: true, separator: "", decimal: ".", suffix: "%"}),
+    teamScoreAccuracyDelta: new CountUp("teamScoreAccuracyDelta", 0, 0, 2, 0.2, { useEasing: true, useGrouping: true, separator: "", decimal: ".", suffix: "%"}),
 }
 
 // Score Accuracy Switch
 const redTeamScoreTextEl = document.getElementById("redTeamScoreText")
 const blueTeamScoreTextEl = document.getElementById("blueTeamScoreText")
+const currentScoringSystemTextEl = document.getElementById("currentScoringSystemText")
 let currentScoreType = "score"
+function setScoringSystem(system) {
+    currentScoreType = system
+    if (currentScoreType === "score") {
+        redTeamScoreNumberEl.style.display = "block"
+        blueTeamScoreNumberEl.style.display = "block"
+        teamScoreNumberDeltaEl.style.display = "block"
+        redTeamAccuracyNumberEl.style.display = "none"
+        blueTeamAccuracyNumberEl.style.display = "none"
+        teamScoreAccuracyDeltaEl.style.display = "none"
+        currentScoringSystemTextEl.innerText = "Score V2"
+        redTeamScoreTextEl.innerText = "SCORE"
+        blueTeamScoreTextEl.innerText = "SCORE"
+    } else {
+        redTeamScoreNumberEl.style.display = "none"
+        blueTeamScoreNumberEl.style.display = "none"
+        teamScoreNumberDeltaEl.style.display = "none"
+        redTeamAccuracyNumberEl.style.display = "block"
+        blueTeamAccuracyNumberEl.style.display = "block"
+        teamScoreAccuracyDeltaEl.style.display = "block"
+        currentScoringSystemTextEl.innerText = "Accuracy"
+        redTeamScoreTextEl.innerText = "ACCURACY"
+        blueTeamScoreTextEl.innerText = "ACCURACY"
+    }
+}
+
+// IPC States
+let currentIPCState = 0
+let previousIPCState = 0
 
 // Moving score bar
 const redTeamMovingScoreBarEl = document.getElementById("redTeamMovingScoreBar")
@@ -105,7 +137,6 @@ socket.onmessage = async (event) => {
         for (let i = 0; i < data.tourney.ipcClients.length; i++) {
             let currentClient = data.tourney.ipcClients[i]
             let currentScore = currentClient.gameplay.score * (currentClient.gameplay.mods.str.includes("ST")? 1.75 : 1)
-            console.log(currentScore)
             if (currentClient.team === "left") currentScoreRed += Math.round(currentScore)
             else currentScoreBlue += Math.round(currentScore)
         }
@@ -120,7 +151,7 @@ socket.onmessage = async (event) => {
 
         // Bar percentage
         let movingScoreBarDifferencePercent = Math.min(currentScoreDelta / 1000000, 1)
-        let movingScoreBarRectangleWidth = Math.min(Math.pow(movingScoreBarDifferencePercent, 0.5) * 0.8 * 960, 960)
+        let movingScoreBarRectangleWidth = Math.min(Math.pow(movingScoreBarDifferencePercent, 0.5)* 960, 960)
         // Set bar
         if (currentScoreRed > currentScoreBlue) {
             redTeamMovingScoreBarEl.style.width = `${movingScoreBarRectangleWidth}px`
@@ -132,5 +163,52 @@ socket.onmessage = async (event) => {
             redTeamMovingScoreBarEl.style.width = `0px`
             blueTeamMovingScoreBarEl.style.width = `${movingScoreBarRectangleWidth}px`
         }
+    } else if (currentScoreType === "accuracy") {
+        // Reset scores
+        currentScoreRed = 0
+        currentScoreBlue = 0
+        currentScoreDelta = 0
+
+        // Add accuracies
+        for (let i = 0; i < data.tourney.ipcClients.length; i++) {
+            let currentClient = data.tourney.ipcClients[i]
+            let currentScore = currentClient.gameplay.accuracy
+            if (currentClient.team === "left") currentScoreRed += currentScore
+            else currentScoreBlue += currentScore
+        }
+
+        currentScoreRed /= (data.tourney.ipcClients.length / 2)
+        currentScoreBlue /= (data.tourney.ipcClients.length / 2)
+
+        // Set delta
+        currentScoreDelta = Math.abs(currentScoreRed - currentScoreBlue)
+
+        // Set animations
+        scoreAnimation.redTeamAccuracyNumber.update(currentScoreRed)
+        scoreAnimation.blueTeamAccuracyNumber.update(currentScoreBlue)
+        scoreAnimation.teamScoreAccuracyDelta.update(currentScoreDelta)
+
+        // Bar percentage
+        let movingScoreBarDifferencePercent = Math.min(currentScoreDelta / 15, 1)
+        let movingScoreBarRectangleWidth = Math.min(Math.pow(movingScoreBarDifferencePercent, 0.5) * 960, 960)
+        // Set bar
+        if (currentScoreRed > currentScoreBlue) {
+            redTeamMovingScoreBarEl.style.width = `${movingScoreBarRectangleWidth}px`
+            blueTeamMovingScoreBarEl.style.width = `0px`
+        } else if (currentScoreRed === currentScoreBlue) {
+            redTeamMovingScoreBarEl.style.width = `0px`
+            blueTeamMovingScoreBarEl.style.width = `0px`
+        } else if (currentScoreRed < currentScoreBlue) {
+            redTeamMovingScoreBarEl.style.width = `0px`
+            blueTeamMovingScoreBarEl.style.width = `${movingScoreBarRectangleWidth}px`
+        }
+    }
+    
+    // IPC State
+    // This is only used for setting the score system
+    if (currentIPCState !== data.tourney.manager.ipcState) {
+        currentIPCState = data.tourney.manager.ipcState
+        if (previousIPCState === 4 && currentIPCState !== previousIPCState) setScoringSystem("score")
+        previousIPCState = currentIPCState
     }
 }

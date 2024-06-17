@@ -35,8 +35,8 @@
         <div class="teamScoreDelta" id="teamScoreAccuracyDelta">88.88%</div>
 
         <!-- Score Bar -->
-        <div id="redTeamMovingScoreBar"></div>
-        <div id="blueTeamMovingScoreBar"></div>
+        <div class="teamMovingScoreBar" id="redTeamMovingScoreBar"></div>
+        <div class="teamMovingScoreBar" id="blueTeamMovingScoreBar"></div>
 
         <!-- Map Box Container-->
         <div id="mapBoxContainer">
@@ -54,6 +54,13 @@
             <div>BPM: <span></span></div>
             <div>LEN: <span></span></div>
         </div>
+    </div>
+    <div id="sideBar">
+        <h1 id="sideBarCurrentScoringSystemText">Current Scoring System</h1>
+        <div id="currentScoringSystemText">Score V2</div>
+        <button class="sideBarFullButton" onclick="setScoringSystem('score')">Score V2</button>
+        <button class="sideBarFullButton" onclick="setScoringSystem('accuracy')">Accuracy</button>
+        <p id="sideBarCurrentScoringSystemWarningText">Please note that the score system will reset to Score V2 after every map</p>
     </div>
 
     <script src="../_shared/deps/reconnecting-websocket.min.js"></script>

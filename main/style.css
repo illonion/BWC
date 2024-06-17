@@ -103,11 +103,14 @@
 #teamScoreAccuracyDelta { display: none;}
 
 /* Moving Score Bar */
-#redTeamMovingScoreBar {
-    position: absolute; right: 50%; top: 881px;
-    width: 652px; height: 33px;
+.teamMovingScoreBar {
+    position: absolute; top: 881px;
+    height: 33px;
     background-color: #262626;
+    transition: 200ms ease-in-out;
 }
+#redTeamMovingScoreBar { right: 50%;  }
+#blueTeamMovingScoreBar { left: 50%; }
 
 /* Map Box Container */
 #mapBoxContainer {
@@ -145,3 +148,37 @@
     display: flex;
 }
 #songStats > * { margin: 0 25px; }
+
+/* Side Bar */
+#sideBar {
+    position: absolute; left: 1920px; top: 0;
+    width: 250px; height: 1080px;
+}
+#sideBarCurrentScoringSystemText {
+    width: inherit;
+    text-align: center;
+    font-family: "Aaux Next"; font-weight: 800; font-size: 18px;
+}
+#currentScoringSystemText {
+    width: inherit;
+    text-align: center;
+    font-family: "Aaux Next"; font-weight: 800; font-size: 25px;
+    margin-bottom: 10px;
+}
+.sideBarFullButton {
+    width: 200px; height: 50px;
+    font-family: "Aaux Next"; font-weight: 800; font-size: 20px;
+    margin-bottom: 5px;
+    margin-left: 25px;
+    border-radius: 10px;
+    background: transparent;
+}
+.sideBarFullButton:active {
+    background: black;
+    color: white;
+}
+#sideBarCurrentScoringSystemWarningText {
+    width: inherit;
+    text-align: center;
+    font-family: "Aaux Next"; font-weight: 800; font-size: 16px;
+}
