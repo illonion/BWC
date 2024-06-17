@@ -117,6 +117,8 @@
     position: absolute; left: 50%; top: 955px;
     transform: translateX(-50%);
     width: 718px; height: 52px;
+    background-size: cover;
+    background-position: center;
 }
 #mapBoxContainerLayer {
     position: absolute; left: 0; top: 0;

@@ -87,6 +87,19 @@ let previousIPCState = 0
 const redTeamMovingScoreBarEl = document.getElementById("redTeamMovingScoreBar")
 const blueTeamMovingScoreBarEl = document.getElementById("blueTeamMovingScoreBar")
 
+// Beatmap information
+const mapBoxContainerEl = document.getElementById("mapBoxContainer")
+const mapBoxContainerTextEl = document.getElementById("mapBoxContainerText")
+const songNameEl = document.getElementById("songName")
+const songStatsSREl = document.getElementById("songStatsSR")
+const songStatsAREl = document.getElementById("songStatsAR")
+const songStatsCSEl = document.getElementById("songStatsCS")
+const songStatsODEl = document.getElementById("songStatsOD")
+const songStatsBPMEl = document.getElementById("songStatsBPM")
+const songStatLENsEl = document.getElementById("songStatLENs")
+let currentId, currentMd5
+let foundMapInMappool = false
+
 socket.onmessage = async (event) => {
     const data = JSON.parse(event.data) 
     console.log(data)
@@ -210,5 +223,29 @@ socket.onmessage = async (event) => {
         currentIPCState = data.tourney.manager.ipcState
         if (previousIPCState === 4 && currentIPCState !== previousIPCState) setScoringSystem("score")
         previousIPCState = currentIPCState
+    }
+
+    // Beatmap information
+    if (currentId !== data.menu.bm.id || currentMd5 !== data.menu.bm.md5) {
+        currentId = data.menu.bm.id
+        currentMd5 = data.menu.bm.md5
+
+        mapBoxContainerEl.style.backgroundImage = `url("https://assets.ppy.sh/beatmaps/${data.menu.bm.set}/covers/cover.jpg")`
+        mapBoxContainerTextEl.innerText = ""
+        songNameEl.innerText = `${data.menu.bm.metadata.artist} - ${data.menu.bm.metadata.title}`
+    }
+
+    if (!foundMapInMappool) {
+        songStatsSREl.innerText = data.menu.bm.stats.fullSR
+        songStatsAREl.innerText = data.menu.bm.stats.AR
+        songStatsCSEl.innerText = data.menu.bm.stats.CS
+        songStatsODEl.innerText = data.menu.bm.stats.OD
+        songStatsBPMEl.innerText = data.menu.bm.stats.BPM.common
+
+        // Length
+        const songLength = Math.round(data.menu.bm.time.full / 1000)
+        const minutes = Math.floor(songLength / 60)
+        const seconds = Math.floor(songLength % 60).toString().padStart(2, '0')
+        songStatLENsEl.innerText = `${minutes}:${seconds}`
     }
 }
