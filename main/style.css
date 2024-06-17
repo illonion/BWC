@@ -88,15 +88,19 @@
     position: absolute; top: 955px;
     font-family: "Aaux Next"; font-weight: 800; font-size: 72px;
     letter-spacing: 11.52px;
+    font-variant-numeric: tabular-nums;
 }
-#blueTeamScoreNumber { right: 46.48px; }
+.teamAccuracyNumber { display: none; }
+.blueTeamNumber { right: 46.48px; }
 
 /* Team Score Number Delta */
-#teamScoreNumberDelta {
+.teamScoreDelta {
     position: absolute; left: 50%; top: 914px;
     transform: translateX(-50%);
     font-family: "Aaux Next"; font-weight: 800; font-size: 22px;
+    font-variant-numeric: tabular-nums;
 }
+#teamScoreAccuracyDelta { display: none;}
 
 /* Moving Score Bar */
 #redTeamMovingScoreBar {

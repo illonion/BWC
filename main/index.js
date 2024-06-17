@@ -32,6 +32,29 @@ const redTeamStarsEl = document.getElementById("redTeamStars")
 const blueTeamStarsEl = document.getElementById("blueTeamStars")
 let currentBestOf, currentFirstTo, currentRedStars, currentBlueStars
 
+// Score Section
+const redTeamScoreNumberEl = document.getElementById("redTeamScoreNumber")
+const blueTeamScoreNumberEl = document.getElementById("blueTeamScoreNumber")
+const redTeamAccuracyNumberEl = document.getElementById("redTeamAccuracyNumber")
+const blueTeamAccuracyNumberEl = document.getElementById("blueTeamAccuracyNumber")
+const teamScoreNumberDeltaEl = document.getElementById("teamScoreNumberDelta")
+const teamScoreAccuracyDeltaEl = document.getElementById("teamScoreAccuracyDelta")
+let currentScoreRed, currentScoreBlue, currentScoreDelta
+const scoreAnimation = {
+    redTeamScoreNumber: new CountUp("redTeamScoreNumber", 0, 0, 0, 0.2, { useEasing: true, useGrouping: true, separator: "", decimal: "." }),
+    blueTeamScoreNumber: new CountUp("blueTeamScoreNumber", 0, 0, 0, 0.2, { useEasing: true, useGrouping: true, separator: "", decimal: "." }),
+    teamScoreNumberDelta: new CountUp("teamScoreNumberDelta", 0, 0, 0, 0.2, { useEasing: true, useGrouping: true, separator: "", decimal: "." })
+}
+
+// Score Accuracy Switch
+const redTeamScoreTextEl = document.getElementById("redTeamScoreText")
+const blueTeamScoreTextEl = document.getElementById("blueTeamScoreText")
+let currentScoreType = "score"
+
+// Moving score bar
+const redTeamMovingScoreBarEl = document.getElementById("redTeamMovingScoreBar")
+const blueTeamMovingScoreBarEl = document.getElementById("blueTeamMovingScoreBar")
+
 socket.onmessage = async (event) => {
     const data = JSON.parse(event.data) 
     console.log(data)
@@ -69,5 +92,45 @@ socket.onmessage = async (event) => {
         }
         createStars(currentRedStars, redTeamStarsEl)
         createStars(currentBlueStars, blueTeamStarsEl)
+    }
+
+    // Scores
+    if (currentScoreType === "score") {
+        // Reset scores
+        currentScoreRed = 0
+        currentScoreBlue = 0
+        currentScoreDelta = 0
+
+        // Add scores
+        for (let i = 0; i < data.tourney.ipcClients.length; i++) {
+            let currentClient = data.tourney.ipcClients[i]
+            let currentScore = currentClient.gameplay.score * (currentClient.gameplay.mods.str.includes("ST")? 1.75 : 1)
+            console.log(currentScore)
+            if (currentClient.team === "left") currentScoreRed += Math.round(currentScore)
+            else currentScoreBlue += Math.round(currentScore)
+        }
+
+        // Set delta
+        currentScoreDelta = Math.abs(currentScoreRed - currentScoreBlue)
+
+        // Set animations
+        scoreAnimation.redTeamScoreNumber.update(currentScoreRed)
+        scoreAnimation.blueTeamScoreNumber.update(currentScoreBlue)
+        scoreAnimation.teamScoreNumberDelta.update(currentScoreDelta)
+
+        // Bar percentage
+        let movingScoreBarDifferencePercent = Math.min(currentScoreDelta / 1000000, 1)
+        let movingScoreBarRectangleWidth = Math.min(Math.pow(movingScoreBarDifferencePercent, 0.5) * 0.8 * 960, 960)
+        // Set bar
+        if (currentScoreRed > currentScoreBlue) {
+            redTeamMovingScoreBarEl.style.width = `${movingScoreBarRectangleWidth}px`
+            blueTeamMovingScoreBarEl.style.width = `0px`
+        } else if (currentScoreRed === currentScoreBlue) {
+            redTeamMovingScoreBarEl.style.width = `0px`
+            blueTeamMovingScoreBarEl.style.width = `0px`
+        } else if (currentScoreRed < currentScoreBlue) {
+            redTeamMovingScoreBarEl.style.width = `0px`
+            blueTeamMovingScoreBarEl.style.width = `${movingScoreBarRectangleWidth}px`
+        }
     }
 }
