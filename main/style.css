@@ -25,6 +25,9 @@
 
 .leftAlign { left: 58px; }
 
+/* Background Video */
+#bgVideo { position: absolute; left: 0; top: 0; }
+
 /* Whole Page */
 #main {
     position: absolute; left: 0; top: 0;
