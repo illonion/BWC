@@ -1,3 +1,10 @@
+:root {
+    --borderBlue: #00AEB7;
+}
+
+/* Background Video */
+#bgVideo { position: absolute; left: 0; top: 0; }
+
 /* Fonts */
 @font-face {
     font-family: "Aaux Next";
@@ -28,6 +35,8 @@
     position: absolute; left: 40px; top: 195px;
     width: 347px; height: 168px;
     background-color: #86C158;
+    background-size: cover;
+    background-position: center;
 }
 .teamInformation {
     position: absolute; 
@@ -38,3 +47,86 @@
     letter-spacing: 11.52px;
 }
 #teamSeed { left: 439px; top: 260px; }
+
+/* Results Table */
+#resultsTable {
+    position: absolute; left: 53px; top: 416px;
+    width: 1812px; height: 597px;
+    display: flex;
+    flex-direction: column;
+}
+tr { 
+    display: flex; 
+    vertical-align: middle;
+    border-bottom: 4px solid var(--borderBlue);
+}
+.headerRow {  border-bottom: 4px solid var(--borderBlue); }
+th { 
+    height: 60px; line-height: 60px;
+    mix-blend-mode: multiply;
+}
+td { line-height: 53px; }
+th, td {
+    align-self: center;
+    width: 147px;
+    font-family: "Aaux Next"; font-size: 27px; font-weight: 800;
+    text-align: center;
+    position: relative;
+    flex-grow: 1;
+    border-right: 4px solid var(--borderBlue);
+}
+th::before, td::before {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    mix-blend-mode: multiply;
+}
+.firstColumn {
+    width: 180px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+th { color: white; }
+.notHeaderRow td {
+    height: 53px;
+    border-right: 4px solid var(--borderBlue);
+}
+
+/* Side bar */
+#sidebar {
+    position: absolute; left: 1920px; top: 0px;
+    width: 250px; height: 1080px;
+    background-color: white;
+}
+#currentTeamText {
+    margin-top: 15px; margin-left: 15px;
+    font-family: "Aaux Next"; font-size: 24px; font-weight: 800;
+}
+#currentTeam {
+    margin-left: 15px;
+    font-family: "Aaux Next"; font-size: 40px; font-weight: 800;
+}
+#buttons {
+    margin-left: 15px;
+    margin-top: 15px;
+    display: flex;
+    justify-content: space-between;
+    width: 220px;
+}
+.sidebarButton {
+    width: 100px; height: 100px;
+    font-family: "Aaux Next"; font-size: 20px; font-weight: 800;
+    border-radius: 10px;
+    background-color: transparent;
+}
+.sidebarButton:active {
+    background-color: black;
+    color: white;
+}

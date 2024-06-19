@@ -8,6 +8,9 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <video id="bgVideo" autoplay loop muted playbackRate=0.3>
+        <source src="static/qualifierresults.mp4" type="video/mp4">
+    </video>
     <div id="main">
         <!-- Team Section -->
         <div id="teamBanner"></div>
@@ -15,6 +18,14 @@
         <div class="teamInformation" id="teamSeed">#teamrank</div>
 
         <table id="resultsTable"></table>
+    </div>
+    <div id="sidebar">
+        <div id="currentTeamText">Current Team</div>
+        <div id="currentTeam"></div>
+        <div id="buttons">
+            <button class="sidebarButton" onclick="nextTeam()" id="nextTeam">Next Team</button>
+            <button class="sidebarButton" onclick="previousTeam()" id="previousTeam">Previous Team</button>
+        </div>
     </div>
 
     <script src="index.js"></script>
