@@ -64,6 +64,7 @@ tr {
 th { 
     height: 60px; line-height: 60px;
     mix-blend-mode: multiply;
+    color: white;
 }
 td { line-height: 53px; }
 th, td {
@@ -73,9 +74,9 @@ th, td {
     text-align: center;
     position: relative;
     flex-grow: 1;
-    border-right: 4px solid var(--borderBlue);
 }
-th::before, td::before {
+th::before{
+    border-right: 4px solid var(--borderBlue);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -83,7 +84,7 @@ th::before, td::before {
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%;
+    width: calc(100% - 4px);
     height: 100%;
     mix-blend-mode: multiply;
 }
@@ -93,7 +94,6 @@ th::before, td::before {
     overflow: hidden;
     text-overflow: ellipsis;
 }
-th { color: white; }
 .notHeaderRow td {
     height: 53px;
     border-right: 4px solid var(--borderBlue);
