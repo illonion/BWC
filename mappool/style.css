@@ -1,10 +1,5 @@
 @font-face {
     font-family: "Aaux Next";
-    font-weight: 700;
-    src: url("../fonts/Aaux\ Next\ SemiBold.otf");
-}
-@font-face {
-    font-family: "Aaux Next";
     font-weight: 800;
     src: url("../fonts/Aaux\ Next\ Bold.otf")
 }
@@ -13,11 +8,9 @@
     font-weight: 900;
     src: url("../fonts/Aaux\ Next\ Black.otf");
 }
-@font-face {
-    font-family: "Aaux Next Italic";
-    font-weight: 800;
-    src: url("../fonts/Aaux\ Next\ Bold\ Italic.otf")
-}
+
+/* Background Video */
+#bgVideo { position: absolute; left: 0; top: 0; }
 
 /* Whole Page */
 #main {
@@ -25,6 +18,7 @@
     width: 1920px; height: 1080px;
     background-size: cover;
     background-image: url("static/background.png");
+    overflow: hidden;
 }
 
 /* Team Section */
@@ -137,4 +131,34 @@
     font-family: "Aaux Next"; font-weight: 800; font-size: 22px;
     letter-spacing: 8.39px;
     text-indent: 4.195px;
+}
+
+/* Chat Display */
+#chatDisplay {
+    position: absolute; left: 449.35px; top: 840.06px;
+    width: 1010.23px; height: 232px;
+    transform: rotate(2.7deg);
+    clip-path: polygon(0% 30%, 16.3% 17%, 16% 0%, 100% 0%, 100% 100%, 0% 100%);
+    overflow-x: hidden;
+    overflow-y: scroll;
+    color: white;
+}
+#chatDisplayContainer {
+    margin: 0 15px 10px;
+}
+.chatMessageContainer {
+    font-family: "Aaux Next"; font-weight: 800; font-size: 18px;
+    display: flex;
+}
+.chatTime { width: 8%; }
+.wholeMessage {
+    display: flex;
+    width: 92%;
+}
+.messageUser {
+    margin-right: 7px;
+    min-width: 100px;
+}
+::-webkit-scrollbar {
+    display: none;
 }
