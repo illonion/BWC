@@ -63,3 +63,31 @@
     border-radius: 12.5px;
 }
 .teamStarFill { background-color: var(--starColour); }
+/* Bans Container */
+.bansContainer {
+    position: absolute;
+    width: 360px;
+}
+#redBansContainer { left: 40px; top: 471px; }
+#blueBansContainer { right: 40px; top: 155px; }
+/* Bans Text */
+.bansText {
+    font-family: "Aaux Next"; font-weight: 800; font-size: 26px;
+    letter-spacing: 4.16px;
+    text-align: center;
+    text-indent: 2.08px;
+}
+/* Ban Card Cotnainer */
+#redBanCardsContainer { 
+    display: flex;
+    width: 100%;
+    margin-top: 7px; 
+}
+.banCardsContainerOneChild { justify-content: center; }
+.banCardsContainerMultipleChildren { justify-content: space-between; }
+/* Ban Card */
+.banCard {
+    width: 170px; height: 223px;
+    background-color: #C79898;
+    box-shadow: inset 0 0 0 11px #323232;
+}
