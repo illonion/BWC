@@ -1,0 +1,18 @@
+/* Whole Page */
+#main {
+    position: absolute; left: 0; top: 0;
+    width: 1920px; height: 1080px;
+    background-size: cover;
+    background-image: url("static/background.png");
+}
+
+/* Team Section */
+/* Team Banner */
+.teamBanner {
+    position: absolute; 
+    width: 347px; height: 168px;
+    background-color: #86C158;
+}
+#redTeamBanner { left: 40px; top: 199px; }
+#blueTeamBanner { right: 40px; top: 452px; }
+/* Team Name */
