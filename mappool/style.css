@@ -129,3 +129,12 @@
     letter-spacing: 4.81px;
     text-indent: 2.405px;
 }
+
+/* Round Name */
+#roundName {
+    position: absolute; left: 50%; top: 759px;
+    transform: translateX(-50%);
+    font-family: "Aaux Next"; font-weight: 800; font-size: 22px;
+    letter-spacing: 8.39px;
+    text-indent: 4.195px;
+}
