@@ -1,3 +1,9 @@
+:root {
+    --redColour: #EC704A;
+    --blueColour: #00AEB7;
+    --starColour: #262626;
+}
+
 @font-face {
     font-family: "Aaux Next";
     font-weight: 800;
@@ -72,7 +78,7 @@
     text-indent: 2.08px;
 }
 /* Ban Card Cotnainer */
-#redBanCardsContainer { 
+.banCardsContainer { 
     display: flex;
     width: 100%;
     margin-top: 7px; 
@@ -111,8 +117,8 @@
 /* Pick Card Layer */
 .pickCardLayer { background-color: rgba(0,0,0,0.5); }
 /* Pick Card Border */
-.pickCardBorderRed { box-shadow: inset 0 0 0 9px #EC704A; }
-.pickCardBorderBlue { box-shadow: inset 0 0 0 9px #00AEB7; }
+.pickCardBorderRed { box-shadow: inset 0 0 0 9px var(--redColour); }
+.pickCardBorderBlue { box-shadow: inset 0 0 0 9px var(--blueColour); }
 /* Pick Card Text */
 .pickCardText {
     bottom: 10px;
@@ -162,3 +168,8 @@
 ::-webkit-scrollbar {
     display: none;
 }
+
+.unknown { color: yellow; }
+.left { color: var(--redColour); }
+.right { color: var(--blueColour); }
+.bot { color: pink }
