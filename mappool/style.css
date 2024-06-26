@@ -34,6 +34,8 @@
     position: absolute; 
     width: 347px; height: 168px;
     background-color: #86C158;
+    background-size: cover;
+    background-position: center;
 }
 #redTeamBanner { left: 40px; top: 199px; }
 #blueTeamBanner { right: 40px; top: 452px; }
@@ -51,9 +53,9 @@
     border-radius: 12.5px;
     display: flex;
 }
-#redTeamStars { left: 40px; top: 427px; }
+#redTeamStars { left: 24px; top: 427px; }
 #blueTeamStars {
-    right: 40px; top: 680px;
+    right: 24px; top: 680px;
     flex-direction: row-reverse
 }
 /* Team Stars */
@@ -115,9 +117,9 @@
     position: absolute; 
     display: flex;
 }
-#redPickSection { left: 438px; top: 206px; }
+#redPickSection { left: 513.095px; top: 206px; }
 #bluePickSection {
-    right: 438px; top: 459px;
+    right: 513.095px; top: 459px;
     flex-direction: row-reverse;
 }
 /* Pick Cards */

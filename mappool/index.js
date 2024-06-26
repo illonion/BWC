@@ -126,6 +126,18 @@ getMappool()
 // Find map in mappool
 const findMapInMappool = beatmapID => allBeatmaps.find(map => map.beatmapID == beatmapID)
 
+// Load in teams
+let allTeams
+async function getTeams() {
+    const response = await fetch("../_data/teams.json")
+    allTeams = await response.json()
+}
+
+getTeams()
+
+// Find team by team name
+const findTeamByTeamName = teamName => allTeams.find(team => team.team_name === teamName)
+
 // Socket Events
 // Credits: VictimCrasher - https://github.com/VictimCrasher/static/tree/master/WaveTournament
 const socket = new ReconnectingWebSocket("ws://" + location.host + "/ws")
@@ -158,10 +170,18 @@ socket.onmessage = event => {
     if (currentRedTeamName !== data.tourney.manager.teamName.left) {
         currentRedTeamName = data.tourney.manager.teamName.left
         redTeamNameEl.innerText = currentRedTeamName
+        const currentTeam = findTeamByTeamName(currentRedTeamName)
+        if (currentTeam) {
+            redTeamBannerEl.style.backgroundImage = `url("${currentTeam.team_banner}")`
+        }
     }
     if (currentBlueTeamName !== data.tourney.manager.teamName.right) {
         currentBlueTeamName = data.tourney.manager.teamName.right
         blueTeamNameEl.innerText = currentBlueTeamName
+        const currentTeam = findTeamByTeamName(currentBlueTeamName)
+        if (currentTeam) {
+            blueTeamBannerEl.style.backgroundImage = `url("${currentTeam.team_banner}")`
+        }
     }
 
     if (currentRedTeamStarCount !== data.tourney.manager.stars.left ||
@@ -185,11 +205,13 @@ socket.onmessage = event => {
             if (fill) teamStar.classList.add("teamStarFill")
             return teamStar
         }
-        
-        for (let i = 0; i < currentRedTeamStarCount; i++) redTeamStarsEl.append(createStar(true))
-        for (let i = 0; i < currentFirstTo; i++) redTeamStarsEl.append(createStar(false))
-        for (let i = 0; i < currentBlueTeamStarCount; i++) blueTeamStarsEl.append(createStar(true))
-        for (let i = 0; i < currentFirstTo; i++) blueTeamStarsEl.append(createStar(false))
+
+        let i = 0
+        for (i; i < currentRedTeamStarCount; i++) redTeamStarsEl.append(createStar(true))
+        for (i; i < currentFirstTo; i++) redTeamStarsEl.append(createStar(false))
+        i = 0
+        for (i; i < currentBlueTeamStarCount; i++) blueTeamStarsEl.append(createStar(true))
+        for (i; i < currentFirstTo; i++) blueTeamStarsEl.append(createStar(false))
     }
 
     // Chat Display
