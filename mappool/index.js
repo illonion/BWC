@@ -264,6 +264,17 @@ function mapClickEvent() {
     const currentMap = findMapInMappool(currentMapId)
     if (!currentMap) return
 
+    // Check if map has been banned or picked before
+    const allIdElements = document.querySelectorAll("[data-id")
+    let mapFound = false
+    allIdElements.forEach(element => {
+        if (element.dataset.id == currentMapId && (element.dataset.action === "ban" || element.dataset.action === "pick")) {
+            mapFound = true
+            return
+        }
+    })
+    if (mapFound) return
+
     // Set bans
     if (nextActionAction === "ban") {
         // Get current container
