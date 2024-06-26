@@ -148,6 +148,9 @@ const chatDisplayEl = document.getElementById("chatDisplay")
 const chatDisplayContainerEl = document.getElementById("chatDisplayContainer")
 let chatLength = 0
 
+// Map information
+let currentId, currentMd5, foundMapInMappool
+
 socket.onmessage = event => {
     const data = JSON.parse(event.data)
 
@@ -239,6 +242,25 @@ socket.onmessage = event => {
         })
     }
     console.log(data)
+
+    // Put in correct stats for mappool map
+    if ((currentId !== data.menu.bm.id || currentMd5 !== data.menu.bm.md5) && allBeatmaps) {
+        currentId = data.menu.bm.id
+        currentMd5 = data.menu.bm.md5
+        foundMapInMappool = false
+
+        // See if the map exists inside the mappool
+        const mappoolButton = document.querySelectorAll("[data-id]")
+        let currentButton
+        mappoolButton.forEach(button => {
+            if (button.dataset.id == currentId && !button.dataset.action) {
+                currentButton = button
+                return
+            }
+        })
+        
+        if (currentButton) currentButton.click()
+    }
 }
 
 // Next Action
@@ -271,7 +293,7 @@ function mapClickEvent() {
         if (element.dataset.id == currentMapId && (element.dataset.action === "ban" || element.dataset.action === "pick")) {
             mapFound = true
             return
-        }
+        }   
     })
     if (mapFound) return
 
