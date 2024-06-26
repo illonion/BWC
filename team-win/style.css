@@ -9,14 +9,21 @@
 }
 .leftAlign { left: 208px; }
 
+/* Background Video */
+.bgVideo {
+    position: absolute; left: 0; top: 0;
+    width: 1920px; height: 1080px;
+}
+
 /* Whole page */
 #main {
     position: absolute; left: 0; top: 0;
     width: 1920px; height: 1080px;
-    background-size: cover;
-    background-image: url("static/background.png");
     overflow: hidden;
     font-family: "Aaux Next"; font-weight: 800;
+}
+#bgVideoBlue {
+    opacity: 0;
 }
 
 /* Round Name */
