@@ -3,6 +3,7 @@ const roundNameEl = document.getElementById("roundName")
 let roundName
 
 // Mappool stuff
+const mappoolSelectionEl = document.getElementById("mappoolSelection")
 const redBanCardsContainerEl = document.getElementById("redBanCardsContainer")
 const blueBanCardsContainerEl = document.getElementById("blueBanCardsContainer")
 const redPickSectionEl = document.getElementById("redPickSection")
@@ -55,14 +56,28 @@ async function getMappool() {
     }
 
     // Append ban cards
-    for (let i = 0; i < currentBanNumber; i++) {
-        const banCardRed = document.createElement("div")
-        banCardRed.classList.add("banCard")
-        redBanCardsContainerEl.append(banCardRed)
+    for (let i = 0; i < currentBanNumber * 2; i++) {
+        const banCard = document.createElement("div")
+        banCard.classList.add("banCard")
 
-        const banCardBlue = document.createElement("div")
-        banCardBlue.classList.add("banCard")
-        blueBanCardsContainerEl.append(banCardBlue)
+        const banCardBackground = document.createElement("div")
+        banCardBackground.classList.add("banCardWhole")
+
+        const banCardLayer = document.createElement("div")
+        banCardLayer.classList.add("banCardWhole", "banCardLayer")
+
+        const banCardBorder = document.createElement("div")
+        banCardBorder.classList.add("banCardWhole", "banCardBorder")
+
+        const banCardText = document.createElement("div")
+        banCardText.classList.add("banCardText")
+
+        banCard.append(banCardBackground, banCardLayer, banCardBorder, banCardText)
+        if (i % 2 === 0) {
+            redBanCardsContainerEl.append(banCard);
+        } else {
+            blueBanCardsContainerEl.append(banCard);
+        }
     }
 
     // Create pick card
@@ -74,7 +89,7 @@ async function getMappool() {
         pickCardBackground.classList.add("pickCardWhole")
 
         let pickCardLayer = document.createElement("div")
-        pickCardLayer.classList.add("pickCardWhole", "pickCardLyer")
+        pickCardLayer.classList.add("pickCardWhole", "pickCardLayer")
         
         let pickCardBorder = document.createElement("div")
         pickCardBorder.classList.add("pickCardWhole", `pickCardBorder${colour}`)
@@ -91,12 +106,25 @@ async function getMappool() {
         redPickSectionEl.append(createPickCard("Red"))
         bluePickSectionEl.append(createPickCard("Blue"))
     }
+
+    // Create mappool stuff
+    for (let i = 0; i < allBeatmaps.length; i++) {
+        const currentMap = allBeatmaps[i]
+
+        // Create button
+        const currentButton = document.createElement("button")
+        currentButton.classList.add("sideBarButton")
+        currentButton.dataset.id = currentMap.beatmapID
+        currentButton.innerText = `${currentMap.mod}${currentMap.order}`
+        currentButton.addEventListener("click", mapClickEvent)
+        mappoolSelectionEl.append(currentButton)
+    }
 }
 
 getMappool()
 
 // Find map in mappool
-const findMapInMappool = beatmapID => allBeatmaps.find(map => map.beatmapID === beatmapID)
+const findMapInMappool = beatmapID => allBeatmaps.find(map => map.beatmapID == beatmapID)
 
 // Socket Events
 // Credits: VictimCrasher - https://github.com/VictimCrasher/static/tree/master/WaveTournament
@@ -211,4 +239,78 @@ socket.onmessage = event => {
         })
     }
     console.log(data)
+}
+
+// Next Action
+const nextActionEl = document.getElementById("nextAction")
+let nextActionTeam, nextActionAction
+function setNextAction(team, action) {
+    nextActionTeam = team
+    nextActionAction = action
+    nextActionEl.innerText = `${capitalizeFirstLetter(team)} ${capitalizeFirstLetter(action)}`
+}
+
+// Capitalise
+function capitalizeFirstLetter(string) {
+    return string[0].toUpperCase() + string.slice(1)
+}
+
+// Map Click Event
+function mapClickEvent() {
+    if (!nextActionTeam || !nextActionAction) return
+
+    // Get current map
+    const currentMapId = this.dataset.id
+    const currentMap = findMapInMappool(currentMapId)
+    if (!currentMap) return
+
+    // Set bans
+    if (nextActionAction === "ban") {
+        // Get current container
+        const currentContainer = (nextActionTeam === "red")? redBanCardsContainerEl : blueBanCardsContainerEl
+        
+        // Get current tile
+        let currentTile
+        for (let i = 0; i < currentContainer.childElementCount; i++) {
+            // If not the final container
+            if (i !== currentContainer.childElementCount - 1 && currentContainer.children[i].dataset.id) continue
+            currentTile = currentContainer.children[i]
+            break
+        }
+
+        // Set details for the current tile
+        currentTile.dataset.id = currentMapId
+        currentTile.dataset.action = nextActionAction
+        currentTile.children[0].style.backgroundImage = `url("${currentMap.imgURL}")`
+        currentTile.children[1].style.display = "block"
+        currentTile.children[3].innerText = `${currentMap.mod}${currentMap.order}`
+    }
+
+    // Set picks
+    if (nextActionAction === "pick") {
+        // Get current container
+        const currentContainer = (nextActionTeam === "red")? redPickSectionEl : bluePickSectionEl
+
+        // Get current tile
+        let currentTile
+        for (let i = 0; i < currentContainer.childElementCount; i++) {
+            // If not the final container
+            if (currentContainer.children[i].dataset.id) continue
+            currentTile = currentContainer.children[i]
+            break
+        }
+        if (!currentTile) return
+
+        // Set details for the current tile
+        currentTile.dataset.id = currentMapId
+        currentTile.dataset.action = nextActionAction
+        currentTile.children[0].style.backgroundImage = `url("${currentMap.imgURL}")`
+        currentTile.children[1].style.display = "block"
+        currentTile.children[3].innerText = `${currentMap.mod}${currentMap.order}`
+    }
+
+    // Set next action
+    if (nextActionTeam === "red") nextActionTeam = "blue"
+    else if (nextActionTeam === "blue") nextActionTeam = "red"
+    setNextAction(nextActionTeam, nextActionAction)
 }

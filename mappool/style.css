@@ -2,6 +2,7 @@
     --redColour: #EC704A;
     --blueColour: #00AEB7;
     --starColour: #262626;
+    --grayColour: rgb(231,231,241);
 }
 
 @font-face {
@@ -87,9 +88,26 @@
 .banCardsContainerMultipleChildren { justify-content: space-between; }
 /* Ban Card */
 .banCard {
+    position: relative;
     width: 170px; height: 223px;
     background-color: #C79898;
-    box-shadow: inset 0 0 0 11px #323232;
+}
+.banCardWhole {
+    position: absolute;
+    left: 0; top: 0;
+    width: 100%; height: 100%;
+}
+.banCardLayer { background-color: rgba(0,0,0,0.5); display: none; }
+.banCardBorder { box-shadow: inset 0 0 0 11px #323232; }
+.banCardText {
+    position: absolute;
+    bottom: 14px;
+    width: 100%;
+    text-align: center;
+    color: white;
+    font-family: "Aaux Next"; font-weight: 900; font-size: 37px;
+    letter-spacing: 4.81px;
+    text-indent: 2.405px;
 }
 
 /* Pick Section */
@@ -115,7 +133,7 @@
     width: 100%; height: 100%;
 }
 /* Pick Card Layer */
-.pickCardLayer { background-color: rgba(0,0,0,0.5); }
+.pickCardLayer { background-color: rgba(0,0,0,0.5); display: none; }
 /* Pick Card Border */
 .pickCardBorderRed { box-shadow: inset 0 0 0 9px var(--redColour); }
 .pickCardBorderBlue { box-shadow: inset 0 0 0 9px var(--blueColour); }
@@ -173,3 +191,53 @@
 .left { color: var(--redColour); }
 .right { color: var(--blueColour); }
 .bot { color: pink }
+
+/* Side Bar */
+#sideBar {
+    position: absolute; left: 1920px; top: 0;
+    width: 250px; height: 1080px;
+    background-color: var(--grayColour);
+}
+h1 {
+    font-family: "Aaux Next"; font-weight: 800; font-size: 24px;
+    margin: 5px 15px;
+}
+/* Side Bar Button */
+.sideBarButton {
+    width: 100px; height: 50px;
+    margin-bottom: 10px;
+    border: 2px solid black;
+    border-radius: 5px;
+    background-color: transparent;
+    font-family: "Aaux Next"; font-weight: 800; font-size: 20px;
+}
+.sideBarButton:active {
+    background-color: black;
+    color: var(--grayColour);
+}
+/* Next Action Section */
+#nextActionSection {
+    padding-bottom: 10px;
+    border-bottom: 2px solid black;
+}
+#nextAction {
+    font-family: "Aaux Next"; font-weight: 800; font-size: 50px;
+    margin-left: 15px;
+}
+#nextActionButtons {
+    width: 210px;
+    margin-top: 15px;
+    margin-left: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+/* Mappool Selection Section */
+#mappoolSelection {
+    margin-top: 20px;
+    margin-left: 20px;
+    width: 210px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}

@@ -40,72 +40,25 @@
 
         <!-- Chat Display -->
         <div id="chatDisplay">
-            <div id="chatDisplayContainer">
-                <div class="chatMessageContainer">
-                    <div class="chatTime">00:00</div>
-                    <div class="wholeMessage">
-                        <div class="messageUser">Fairy Bread: </div>
-                        <div class="messageContent">aaaaaaaaaaaaaaaaaa</div>
-                    </div>
-                </div>
-                <div class="chatMessageContainer">
-                    <div class="chatTime">00:00</div>
-                    <div class="wholeMessage">
-                        <div class="messageUser">Fairy Bread: </div>
-                        <div class="messageContent">aaaaaaaaaaaaaaaaaa</div>
-                    </div>
-                </div>
-                <div class="chatMessageContainer">
-                    <div class="chatTime">00:00</div>
-                    <div class="wholeMessage">
-                        <div class="messageUser">Fairy Bread: </div>
-                        <div class="messageContent">aaaaaaaaaaaaaaaaaa</div>
-                    </div>
-                </div>
-                <div class="chatMessageContainer">
-                    <div class="chatTime">00:00</div>
-                    <div class="wholeMessage">
-                        <div class="messageUser">Fairy Bread: </div>
-                        <div class="messageContent">aaaaaaaaaaaaaaaaaa</div>
-                    </div>
-                </div>
-                <div class="chatMessageContainer">
-                    <div class="chatTime">00:00</div>
-                    <div class="wholeMessage">
-                        <div class="messageUser">Fairy Bread: </div>
-                        <div class="messageContent">aaaaaaaaaaaaaaaaaa</div>
-                    </div>
-                </div>
-                <div class="chatMessageContainer">
-                    <div class="chatTime">00:00</div>
-                    <div class="wholeMessage">
-                        <div class="messageUser">Fairy Bread: </div>
-                        <div class="messageContent">aaaaaaaaaaaaaaaaaa</div>
-                    </div>
-                </div>
-                <div class="chatMessageContainer">
-                    <div class="chatTime">00:00</div>
-                    <div class="wholeMessage">
-                        <div class="messageUser">Fairy Bread: </div>
-                        <div class="messageContent">aaaaaaaaaaaaaaaaaa</div>
-                    </div>
-                </div>
-                <div class="chatMessageContainer">
-                    <div class="chatTime">00:00</div>
-                    <div class="wholeMessage">
-                        <div class="messageUser">Fairy Bread: </div>
-                        <div class="messageContent">aaaaaaaaaaaaaaaaaa</div>
-                    </div>
-                </div>
-                <div class="chatMessageContainer">
-                    <div class="chatTime">00:00</div>
-                    <div class="wholeMessage">
-                        <div class="messageUser">Fairy Bread: </div>
-                        <div class="messageContent">aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaa</div>
-                    </div>
-                </div>
-            </div>
+            <div id="chatDisplayContainer"></div>
         </div>
+    </div>
+
+    <!-- Side bar -->
+    <div id="sideBar">
+        <section id="nextActionSection">
+            <h1 id="nextActionText">Next Action:</h1>
+            <div id="nextAction"></div>
+            <div id="nextActionButtons">
+                <button class="sideBarButton" onclick="setNextAction('red','ban')">Red Ban</button>
+                <button class="sideBarButton" onclick="setNextAction('blue','ban')">Blue Ban</button>
+                <button class="sideBarButton" onclick="setNextAction('red','pick')">Red Pick</button>
+                <button class="sideBarButton" onclick="setNextAction('blue','pick')">Blue Pick</button>
+            </div>
+        </section>
+        <section id="mappoolSelectionSection">
+            <div id="mappoolSelection"></div>
+        </section>
     </div>
 
     <script src="../_shared/deps/reconnecting-websocket.min.js"></script>
