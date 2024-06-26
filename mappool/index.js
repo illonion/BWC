@@ -206,12 +206,32 @@ socket.onmessage = event => {
             return teamStar
         }
 
+        // Create stars
         let i = 0
         for (i; i < currentRedTeamStarCount; i++) redTeamStarsEl.append(createStar(true))
         for (i; i < currentFirstTo; i++) redTeamStarsEl.append(createStar(false))
         i = 0
         for (i; i < currentBlueTeamStarCount; i++) blueTeamStarsEl.append(createStar(true))
         for (i; i < currentFirstTo; i++) blueTeamStarsEl.append(createStar(false))
+    
+        // Set cookie information
+        // Set winning side information and winner team name information
+        if (currentRedTeamStarCount >= currentFirstTo) {
+            document.cookie = "winningTeamColour=red; path=/"
+            document.cookie = `winningTeamName=${currentRedTeamName}; path=/`
+            document.cookie = `teamStarCount=${currentBlueTeamStarCount}; path=/`
+            document.cookie = `currentFirstTo=${currentFirstTo}; path=/`
+        } else if (currentBlueTeamStarCount >= currentFirstTo) {
+            document.cookie = "winningTeamColour=blue; path=/"
+            document.cookie = `winningTeamName=${currentBlueTeamName}; path=/`
+            document.cookie = `teamStarCount=${currentRedTeamStarCount}; path=/`
+            document.cookie = `currentFirstTo=${currentFirstTo}; path=/`
+        } else {
+            document.cookie = "winningTeamColour=none; path=/"
+            document.cookie = `winningTeamName=noe; path=/`
+            document.cookie = `teamStarCount=0; path=/`
+            document.cookie = `currentFirstTo=0; path=/`
+        }
     }
 
     // Chat Display

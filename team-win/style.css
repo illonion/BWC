@@ -22,9 +22,7 @@
     overflow: hidden;
     font-family: "Aaux Next"; font-weight: 800;
 }
-#bgVideoBlue {
-    opacity: 0;
-}
+#bgVideoBlue { opacity: 0; }
 
 /* Round Name */
 #roundName {
