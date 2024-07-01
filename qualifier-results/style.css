@@ -112,10 +112,13 @@ th::before{
 #currentTeam {
     margin-left: 15px;
     font-family: "Aaux Next"; font-size: 40px; font-weight: 800;
+    word-break: break-all;
+    width: 220px;
 }
 #buttons {
     margin-left: 15px;
     margin-top: 15px;
+    margin-bottom: 15px;
     display: flex;
     justify-content: space-between;
     width: 220px;

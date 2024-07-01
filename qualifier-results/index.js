@@ -1,7 +1,7 @@
 // Load in mappool
 let allBeatmaps
 async function getMappool() {
-    const response = await fetch("../_data/sample-qualifier-results/beatmaps.json")
+    const response = await fetch("../_data/qualifier-beatmaps.json")
     const responseJson = await response.json()
     allBeatmaps = responseJson.beatmaps
 }
@@ -10,7 +10,7 @@ getMappool()
 // Load in scores
 let allScores
 async function getScores() {
-    const response = await fetch("../_data/sample-qualifier-results/scores.json")
+    const response = await fetch("../_data/scores.json")
     const responseJson = await response.json()
     allScores = responseJson
 }
@@ -20,7 +20,7 @@ const findScore = (beatmap_id, player_id) => allScores.find(score => score.beatm
 // Load in all teams
 let allTeams
 async function getTeams() {
-    const response = await fetch("../_data/sample-qualifier-results/teams.json")
+    const response = await fetch("../_data/teams.json")
     const responseJson = await response.json()
     allTeams = responseJson.sort((a, b) => (a.team_seed < b.team_seed)? 1 : -1)
 }
@@ -125,7 +125,11 @@ function loadTeam(teamObject) {
 
     // Set height and line height of table depending on teammates
     let height
+    console.log(teamObject.player_ids.filter(player_id => player_id !== null))
     switch (teamObject.player_ids.filter(player_id => player_id !== null).length) {
+        case 5: 
+            height = 82
+            break
         case 6: 
             height = 70
             break
