@@ -44,8 +44,22 @@ function loadTeam(teamObject) {
     // Add team details
     teamNameEl.innerText = teamObject.team_name
     teamSeedEl.innerText = `#${teamObject.team_seed}`
-    teamBannerEl.style.backgroundImage = `url("${teamObject.team_banner}")`
     currentTeamEl.innerText = teamObject.team_name
+    
+
+    // Set some team banners
+    let currentBackgroundImage
+    switch (teamObject.team_name) {
+        case `"BLEHHH :P"""`:
+            currentBackgroundImage = `url("../banners/BLEHHH _P_.png")`
+            break
+        case `#FREETOFY`:
+            currentBackgroundImage = `url("../banners/FREETOFY.png")`
+            break
+        default:
+            currentBackgroundImage = `url("../banners/${teamObject.team_name}.png")`
+    }
+    teamBannerEl.style.backgroundImage = currentBackgroundImage
 
     // Reset table
     resultsTableEl.innerHTML = ""
@@ -113,6 +127,7 @@ function loadTeam(teamObject) {
     teamRow.classList.add("notHeaderRow")
     for (let i = -1; i < teamResultsObject.length; i++) {
         const teamRowData = document.createElement("td")
+        teamRowData.style.backgroundColor = "rgba(222, 107, 71, 0.3)"
         if (i === -1) {
             teamRowData.innerText = teamObject.team_name
             teamRowData.classList.add("firstColumn")
