@@ -1,0 +1,74 @@
+@font-face {
+    font-family: 'BicycletteBold';
+    src: url('https://www.dropbox.com/scl/fi/p28apu00xxlan0kr0jijv/Bicyclette-Bold.woff?rlkey=6jupy9iuqv4c2ghon23wxperz&st=4enzla6s&raw=1') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+    --width: 150;
+
+    --widthPX: calc(var(--width) * 1px);
+    --height: 100px;
+    --nameHeight: 30px;
+
+    width: 100%;
+    overflow: hidden;
+    font-family: 'BicycletteBold', sans-serif;
+}
+ul {
+    margin-block-start: 0;
+    margin-block-end: 0;
+}
+[class^="Voice_voiceContainer"] [class^="Voice_voiceStates"] {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    gap: 0;
+}
+[class^="Voice_voiceContainer"] [class^="Voice_voiceStates"] [class^="Voice_voiceState"] {
+    width: var(--widthPX);
+    height: var(--nameHeight);
+    margin-bottom: 0px;
+    position: relative;
+    text-align: center;
+    overflow: hidden;
+    display: inline-block;
+}
+[class^="Voice_voiceContainer"] [class^="Voice_voiceStates"] [class^="Voice_voiceState"] [class*="Voice_avatar"] {
+    height: var(--widthPX);
+    border-radius: 0;
+    border-width: 0;
+    opacity: 0.3;
+    filter: grayscale(100%);
+    transform: translateY(-22%);
+    transition: filter 0.1s ease-out, opacity 0.1s ease-out;
+    border: 0;
+    display: none;
+}
+[class^="Voice_voiceContainer"] [class^="Voice_voiceStates"] [class^="Voice_voiceState"] [class^="Voice_user"] {
+    position: absolute;
+    bottom: 0px;
+    padding: 0px;
+    height: var(--nameHeight);
+    width: 100%;
+}
+[class^="Voice_voiceContainer"] [class^="Voice_voiceStates"] [class^="Voice_voiceState"] [class^="Voice_user"] [class^="Voice_name"] {
+    font-size: 24px !important;
+    padding: 0px;
+    margin: 0px;
+    height: 0;
+    transform: translateY(2.5px);
+    position: relative;
+    display: inline-block;
+    color: black !important;
+    text-transform: uppercase;
+    width: max-content;
+    font-family: 'BicycletteBold', sans-serif;
+    text-align: center;
+}
+.mute, .self_mute, .self_deafen {
+    display: none;
+}

@@ -105,7 +105,6 @@ let foundMapInMappool = false
 
 socket.onmessage = async (event) => {
     const data = JSON.parse(event.data) 
-    console.log(data)
 
     // Team names
     if (currentRedTeamName !== data.tourney.manager.teamName.left) {
