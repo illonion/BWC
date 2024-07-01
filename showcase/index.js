@@ -6,7 +6,7 @@ let allBeatmaps
 
 // Load in mappool
 async function getMappool() {
-    const response = await fetch("../_data/showcaseBeatmaps.json")
+    const response = await fetch("../_data/showcase-beatmaps.json")
     const responseJson = await response.json()
 
     // Round name
