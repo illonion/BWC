@@ -427,7 +427,7 @@ pickBanManagementSelectEl.addEventListener("change", () => {
     while (sideBarColumn2El.childElementCount > 3) sideBarColumn2El.lastChild.remove()
     pickBanSelectedMap = undefined
 
-    if (currentPickBanManagementAction === "setBan") {
+    if (currentPickBanManagementAction === "setBan" || currentPickBanManagementAction === "removeBan") {
         // Create header
         const header = document.createElement("h2")
         header.innerText = "Whose ban?"
@@ -444,38 +444,41 @@ pickBanManagementSelectEl.addEventListener("change", () => {
         }
         setBanSelect.setAttribute("size", setBanSelect.childElementCount)
 
-        // Which map header
-        const whichMapHeader = document.createElement("h2")
-        whichMapHeader.innerText = "Which map?"
+        if (currentPickBanManagementAction === "setBan") {
+            // Which map header
+            const whichMapHeader = document.createElement("h2")
+            whichMapHeader.innerText = "Which map?"
 
-        // Create buttons
-        const whichMapButtonContainer = document.createElement("div")
-        whichMapButtonContainer.classList.add("whichMapButtonContainer")
-        for (let i = 0; i < allBeatmaps.length; i++) {
-            const whichMapButton = document.createElement("button")
-            whichMapButton.classList.add("whichMapButton")
-            whichMapButton.innerText = `${allBeatmaps[i].mod}${allBeatmaps[i].order}`
-            whichMapButton.dataset.id = allBeatmaps[i].beatmapID
-            whichMapButton.dataset.action = "pickBanManagementBan"
-            whichMapButton.addEventListener("click", changePickBanSelectedMap)
-            whichMapButtonContainer.append(whichMapButton)
-        }
-    
-        // Append everything
-        sideBarColumn2El.append(header, setBanSelect, whichMapHeader, whichMapButtonContainer)
+            // Create buttons
+            const whichMapButtonContainer = document.createElement("div")
+            whichMapButtonContainer.classList.add("whichMapButtonContainer")
+            for (let i = 0; i < allBeatmaps.length; i++) {
+                const whichMapButton = document.createElement("button")
+                whichMapButton.classList.add("whichMapButton")
+                whichMapButton.innerText = `${allBeatmaps[i].mod}${allBeatmaps[i].order}`
+                whichMapButton.dataset.id = allBeatmaps[i].beatmapID
+                whichMapButton.dataset.action = "pickBanManagementBan"
+                whichMapButton.addEventListener("click", changePickBanSelectedMap)
+                whichMapButtonContainer.append(whichMapButton)
+            }
 
-        // Apply changes button
-        const applyChangesButton = document.createElement("button")
-        applyChangesButton.classList.add("sideBarButton")
-        applyChangesButton.setAttribute("id", "applyChangesButton")
-        applyChangesButton.innerText = "Apply Changes"
-
-        // Add correct function onto the apply changes button
-        switch (currentPickBanManagementAction) {
-            case "setBan": applyChangesButton.addEventListener("click", applyChangesSetBan); break;
-        }
-        sideBarColumn2El.append(applyChangesButton)
+            sideBarColumn2El.append(header, setBanSelect, whichMapHeader, whichMapButtonContainer)
+        } else sideBarColumn2El.append(header, setBanSelect)
     }
+
+    // Apply changes button
+    const applyChangesButton = document.createElement("button")
+    applyChangesButton.classList.add("sideBarButton")
+    applyChangesButton.setAttribute("id", "applyChangesButton")
+    applyChangesButton.innerText = "Apply Changes"
+
+    // Add correct function onto the apply changes button
+    switch (currentPickBanManagementAction) {
+        case "setBan": applyChangesButton.addEventListener("click", applyChangesSetBan); break;
+        case "removeBan": applyChangesButton.addEventListener("click", applyChangesRemoveBan); break;
+    }
+
+    sideBarColumn2El.append(applyChangesButton)
 })
 
 // Change Pick Ban Selected Map
@@ -492,10 +495,8 @@ function changePickBanSelectedMap() {
 // Apply Changes Set Ban
 function applyChangesSetBan() {
     // Do checks to see if ban is possible
-    console.log(pickBanSelectedMap)
     if (!pickBanSelectedMap) return
     const setBanSelectElValue = document.getElementById("setBanSelect").value
-    console.log(setBanSelectElValue)
     if (!setBanSelectElValue) return
 
     // Split between number and team
@@ -511,4 +512,25 @@ function applyChangesSetBan() {
     currentTile.children[0].style.backgroundImage = `url("${pickBanSelectedMap.imgURL}")`
     currentTile.children[1].style.display = "block"
     currentTile.children[3].innerText = `${pickBanSelectedMap.mod}${pickBanSelectedMap.order}`
+}
+
+// Apply changes remove ban
+function applyChangesRemoveBan() {
+    // Do checks to see if ban is possible
+    const setBanSelectElValue = document.getElementById("setBanSelect").value
+    if (!setBanSelectElValue) return
+
+    // Split between number and team
+    const setBanSelectElValueSplit = setBanSelectElValue.split("_")
+
+    // Get container
+    const currentContainer = (setBanSelectElValueSplit[0] === "red")? redBanCardsContainerEl : blueBanCardsContainerEl
+    const currentTile = currentContainer.children[parseInt(setBanSelectElValueSplit[1] - 1)]
+    
+    // Applyi information to current tile
+    currentTile.removeAttribute("data-id")
+    currentTile.removeAttribute("data-action")
+    currentTile.children[0].style.backgroundImage = "none"
+    currentTile.children[1].style.display = "none"
+    currentTile.children[3].innerText = ""
 }
