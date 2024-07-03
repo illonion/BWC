@@ -97,7 +97,11 @@ async function getMappool() {
         let pickCardText = document.createElement("div")
         pickCardText.classList.add("pickCardText")
 
-        pickCard.append(pickCardBackground, pickCardLayer, pickCardBorder, pickCardText)
+        let pickCardScoreMode = document.createElement("div")
+        pickCardScoreMode.classList.add("pickCardScoreMode")
+        pickCardScoreMode.innerText = "Sv2"
+
+        pickCard.append(pickCardBackground, pickCardLayer, pickCardBorder, pickCardText, pickCardScoreMode)
         return pickCard
     }
 
@@ -162,6 +166,7 @@ let chatLength = 0
 
 // Map information
 let currentId, currentMd5, foundMapInMappool
+let recentPickTile
 
 socket.onmessage = event => {
     const data = JSON.parse(event.data)
@@ -382,10 +387,31 @@ function mapClickEvent() {
         currentTile.children[0].style.backgroundImage = `url("${currentMap.imgURL}")`
         currentTile.children[1].style.display = "block"
         currentTile.children[3].innerText = `${currentMap.mod}${currentMap.order}`
+
+        recentPickTile = currentTile
     }
 
     // Set next action
     if (nextActionTeam === "red") nextActionTeam = "blue"
     else if (nextActionTeam === "blue") nextActionTeam = "red"
     setNextAction(nextActionTeam, nextActionAction)
+}
+
+// Set score mode
+function setScoreMode(scoreMode) {
+    if (!recentPickTile || !scoreMode) return
+
+    switch (scoreMode) {
+        case "v2":
+            recentPickTile.children[4].style.display = "none"
+            break
+        case "v1":
+            recentPickTile.children[4].style.display = "block"
+            recentPickTile.children[4].innerText = "Sv1"
+            break
+        case "acc":
+            recentPickTile.children[4].style.display = "block"
+            recentPickTile.children[4].innerText = "Acc"
+            break
+    }
 }

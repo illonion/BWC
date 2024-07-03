@@ -46,18 +46,32 @@
 
     <!-- Side bar -->
     <div id="sideBar">
-        <section id="nextActionSection">
-            <h1 id="nextActionText">Next Action:</h1>
-            <div id="nextAction"></div>
-            <div id="nextActionButtons">
-                <button class="sideBarButton" onclick="setNextAction('red','ban')">Red Ban</button>
-                <button class="sideBarButton" onclick="setNextAction('blue','ban')">Blue Ban</button>
-                <button class="sideBarButton" onclick="setNextAction('red','pick')">Red Pick</button>
-                <button class="sideBarButton" onclick="setNextAction('blue','pick')">Blue Pick</button>
-            </div>
+        <section class="sideBarColumn" id="sideBarColumn1">
+            <section id="nextActionSection">
+                <h1 id="nextActionText">Next Action:</h1>
+                <div id="nextAction"></div>
+                <div class="sideBarButtonContainer">
+                    <button class="sideBarButton" onclick="setNextAction('red','ban')">Red Ban</button>
+                    <button class="sideBarButton" onclick="setNextAction('blue','ban')">Blue Ban</button>
+                    <button class="sideBarButton" onclick="setNextAction('red','pick')">Red Pick</button>
+                    <button class="sideBarButton" onclick="setNextAction('blue','pick')">Blue Pick</button>
+                </div>
+            </section>
+            <section id="mappoolSelectionSection">
+                <div id="mappoolSelection"></div>
+            </section>
+            <section id="scoreModeSelection">
+                <h1 id="scoreModeText">Set the score mode for the current map:</h1>
+                <div class="sideBarButtonContainer">
+                    <button class="sideBarButton" onclick="setScoreMode('v2')">Score V2</button>
+                    <button class="sideBarButton" onclick="setScoreMode('v1')">Score V1</button>
+                    <button class="sideBarButton" onclick="setScoreMode('acc')">Accuracy</button>
+                </div>
+            </section>
         </section>
-        <section id="mappoolSelectionSection">
-            <div id="mappoolSelection"></div>
+        <div id="divider"></div>
+        <section class="sideBarColumn" id="sideBarColumn2">
+            <h1>Pick Ban Management System</h1>
         </section>
     </div>
 

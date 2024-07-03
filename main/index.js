@@ -66,7 +66,7 @@ function setScoringSystem(system) {
         redTeamAccuracyNumberEl.style.display = "none"
         blueTeamAccuracyNumberEl.style.display = "none"
         teamScoreAccuracyDeltaEl.style.display = "none"
-        currentScoringSystemTextEl.innerText = "Score V2"
+        currentScoringSystemTextEl.innerText = "Score"
         redTeamScoreTextEl.innerText = "SCORE"
         blueTeamScoreTextEl.innerText = "SCORE"
     } else {
