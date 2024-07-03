@@ -225,6 +225,10 @@ h1 {
     font-family: "Aaux Next"; font-weight: 800; font-size: 24px;
     margin: 5px 15px;
 }
+h2 {
+    font-family: "Aaux Next"; font-weight: 800; font-size: 20px;
+    margin: 5px 15px;
+}
 /* Side Bar Button */
 .sideBarButton {
     width: 100px; height: 50px;
@@ -263,4 +267,38 @@ h1 {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
+}
+
+/* Pick Ban Managemnt Select */
+h2 { margin-top: 15px; }
+.pickBanManagementSelect {
+    width: 200px;
+    margin-top: 5px;
+    margin-left: 25px;
+    text-align: center;
+    background-color: transparent;
+    border: none;
+}
+.pickBanManagementSelect option { font-family: "Aaux Next"; font-weight: 800; font-size: 16px; }
+.whichMapButtonContainer {
+    width: 200px;
+    margin-top: 5px;
+    margin-left: 25px;
+    text-align: center;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.whichMapButton {
+    width: 97.5px;
+    margin-bottom: 5px;
+    font-family: "Aaux Next"; font-weight: 800; font-size: 16px;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+}
+#applyChangesButton {
+    margin-top: 15px;
+    margin-left: 25px;
+    width: 200px;
 }

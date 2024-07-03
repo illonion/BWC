@@ -415,3 +415,100 @@ function setScoreMode(scoreMode) {
             break
     }
 }
+
+// Pick Ban Management System
+const sideBarColumn2El = document.getElementById("sideBarColumn2")
+const pickBanManagementSelectEl = document.getElementById("pickBanManagementSelect")
+let currentPickBanManagementAction
+pickBanManagementSelectEl.addEventListener("change", () => {
+    currentPickBanManagementAction = pickBanManagementSelectEl.value
+
+    // Reset to default
+    while (sideBarColumn2El.childElementCount > 3) sideBarColumn2El.lastChild.remove()
+    pickBanSelectedMap = undefined
+
+    if (currentPickBanManagementAction === "setBan") {
+        // Create header
+        const header = document.createElement("h2")
+        header.innerText = "Whose ban?"
+        
+        // Create Select
+        const setBanSelect = document.createElement("select")
+        setBanSelect.classList.add("pickBanManagementSelect")
+        setBanSelect.setAttribute("id", "setBanSelect")
+        for (let i = 0; i < currentBanNumber * 2; i++) {
+            const setBanOption = document.createElement("option")
+            setBanOption.value = `${(i % 2 === 0)? "red" : "blue"}_${Math.ceil((i + 1) / 2)}`
+            setBanOption.innerText = `${(i % 2 === 0)? "Red" : "Blue"} Ban ${Math.ceil((i + 1) / 2)}`
+            setBanSelect.append(setBanOption)
+        }
+        setBanSelect.setAttribute("size", setBanSelect.childElementCount)
+
+        // Which map header
+        const whichMapHeader = document.createElement("h2")
+        whichMapHeader.innerText = "Which map?"
+
+        // Create buttons
+        const whichMapButtonContainer = document.createElement("div")
+        whichMapButtonContainer.classList.add("whichMapButtonContainer")
+        for (let i = 0; i < allBeatmaps.length; i++) {
+            const whichMapButton = document.createElement("button")
+            whichMapButton.classList.add("whichMapButton")
+            whichMapButton.innerText = `${allBeatmaps[i].mod}${allBeatmaps[i].order}`
+            whichMapButton.dataset.id = allBeatmaps[i].beatmapID
+            whichMapButton.dataset.action = "pickBanManagementBan"
+            whichMapButton.addEventListener("click", changePickBanSelectedMap)
+            whichMapButtonContainer.append(whichMapButton)
+        }
+    
+        // Append everything
+        sideBarColumn2El.append(header, setBanSelect, whichMapHeader, whichMapButtonContainer)
+
+        // Apply changes button
+        const applyChangesButton = document.createElement("button")
+        applyChangesButton.classList.add("sideBarButton")
+        applyChangesButton.setAttribute("id", "applyChangesButton")
+        applyChangesButton.innerText = "Apply Changes"
+
+        // Add correct function onto the apply changes button
+        switch (currentPickBanManagementAction) {
+            case "setBan": applyChangesButton.addEventListener("click", applyChangesSetBan); break;
+        }
+        sideBarColumn2El.append(applyChangesButton)
+    }
+})
+
+// Change Pick Ban Selected Map
+const whichMapButtonEls = document.getElementsByClassName("whichMapButton")
+let pickBanSelectedMap
+function changePickBanSelectedMap() {
+    for (let i = 0; i < whichMapButtonEls.length; i++) {
+        whichMapButtonEls[i].style.backgroundColor = "transparent"
+    }
+    pickBanSelectedMap = findMapInMappool(parseInt(this.dataset.id))
+    this.style.backgroundColor = "rgb(206,206,206)"
+}
+
+// Apply Changes Set Ban
+function applyChangesSetBan() {
+    // Do checks to see if ban is possible
+    console.log(pickBanSelectedMap)
+    if (!pickBanSelectedMap) return
+    const setBanSelectElValue = document.getElementById("setBanSelect").value
+    console.log(setBanSelectElValue)
+    if (!setBanSelectElValue) return
+
+    // Split between number and team
+    const setBanSelectElValueSplit = setBanSelectElValue.split("_")
+ 
+    // Get container
+    const currentContainer = (setBanSelectElValueSplit[0] === "red")? redBanCardsContainerEl : blueBanCardsContainerEl
+    const currentTile = currentContainer.children[parseInt(setBanSelectElValueSplit[1] - 1)]
+
+    // Apply information to current tile
+    currentTile.dataset.id === pickBanSelectedMap.beatmapID
+    currentTile.dataset.action === "ban"
+    currentTile.children[0].style.backgroundImage = `url("${pickBanSelectedMap.imgURL}")`
+    currentTile.children[1].style.display = "block"
+    currentTile.children[3].innerText = `${pickBanSelectedMap.mod}${pickBanSelectedMap.order}`
+}
