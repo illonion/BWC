@@ -468,7 +468,7 @@ pickBanManagementSelectEl.addEventListener("change", () => {
     }
 
     // 
-    if (currentPickBanManagementAction === "setPick") {
+    if (currentPickBanManagementAction === "setPick" || currentPickBanManagementAction === "removePick") {
         // Create header
         const header = document.createElement("h2")
         header.innerText = "Whose pick?"
@@ -521,6 +521,7 @@ pickBanManagementSelectEl.addEventListener("change", () => {
         case "setBan": applyChangesButton.addEventListener("click", applyChangesSetBan); break;
         case "removeBan": applyChangesButton.addEventListener("click", applyChangesRemoveBan); break;
         case "setPick": applyChangesButton.addEventListener("click", applyChangesSetPick); break;
+        case "removePick": applyChangesButton.addEventListener("click", applyChangesRemovePick); break;
     }
 
     sideBarColumn2El.append(applyChangesButton)
@@ -606,4 +607,21 @@ function applyChangesSetPick() {
     currentTile.children[0].style.backgroundImage = `url("${pickBanSelectedMap.imgURL}")`
     currentTile.children[1].style.display = "block"
     currentTile.children[3].innerText= `${pickBanSelectedMap.mod}${pickBanSelectedMap.order}`
+}
+
+// Apply changes remove pick
+function applyChangesRemovePick() {
+    if (!pickBanManagementSelectedPick) return
+    const pickBanManagementSelectedPickSplit = pickBanManagementSelectedPick.split("_")
+
+    // Get container
+    const currentContainer = (pickBanManagementSelectedPickSplit[0] === "red")? redPickSectionEl : bluePickSectionEl
+    const currentTile = currentContainer.children[parseInt(pickBanManagementSelectedPickSplit[1] - 1)]
+
+    // Apply information to current tile
+    currentTile.removeAttribute("data-id")
+    currentTile.removeAttribute("data-action")
+    currentTile.children[0].style.backgroundImage = "none"
+    currentTile.children[1].style.display = "none"
+    currentTile.children[3].innerText = ""
 }
