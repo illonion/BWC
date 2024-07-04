@@ -99,7 +99,6 @@ async function getMappool() {
 
         let pickCardScoreMode = document.createElement("div")
         pickCardScoreMode.classList.add("pickCardScoreMode")
-        pickCardScoreMode.innerText = "Sv2"
 
         pickCard.append(pickCardBackground, pickCardLayer, pickCardBorder, pickCardText, pickCardScoreMode)
         return pickCard
@@ -402,17 +401,9 @@ function setScoreMode(scoreMode) {
     if (!recentPickTile || !scoreMode) return
 
     switch (scoreMode) {
-        case "v2":
-            recentPickTile.children[4].style.display = "none"
-            break
-        case "v1":
-            recentPickTile.children[4].style.display = "block"
-            recentPickTile.children[4].innerText = "Sv1"
-            break
-        case "acc":
-            recentPickTile.children[4].style.display = "block"
-            recentPickTile.children[4].innerText = "Acc"
-            break
+        case "v2": recentPickTile.children[4].innerText = ""; break;
+        case "v1": recentPickTile.children[4].innerText = "Sv1"; break;
+        case "acc": recentPickTile.children[4].innerText = "Acc"; break;
     }
 }
 
@@ -468,7 +459,7 @@ pickBanManagementSelectEl.addEventListener("change", () => {
     }
 
     // 
-    if (currentPickBanManagementAction === "setPick" || currentPickBanManagementAction === "removePick") {
+    if (currentPickBanManagementAction === "setPick" || currentPickBanManagementAction === "removePick" || currentPickBanManagementAction === "setScoreMode") {
         // Create header
         const header = document.createElement("h2")
         header.innerText = "Whose pick?"
@@ -485,8 +476,9 @@ pickBanManagementSelectEl.addEventListener("change", () => {
             whosePickButtonContainer.append(whosePickButton)
         }
 
-        // Which map
+
         if (currentPickBanManagementAction === "setPick") {
+            // Which map
             // Which map header
             const whichMapHeader = document.createElement("h2")
             whichMapHeader.innerText = "Which map?"
@@ -505,6 +497,35 @@ pickBanManagementSelectEl.addEventListener("change", () => {
             }
 
             sideBarColumn2El.append(header, whosePickButtonContainer, whichMapHeader, whichMapButtonContainer)
+        } else if (currentPickBanManagementAction === "setScoreMode") {
+            // Which mode
+            const whichScoreModeHeader = document.createElement("h2")
+            whichScoreModeHeader.innerText = "Which score mode?"
+
+            // Create select
+            const whichScoreModeSelect = document.createElement("select")
+            whichScoreModeSelect.classList.add("pickBanManagementSelect")
+            whichScoreModeSelect.setAttribute("id", "whichScoreModeSelect")
+            whichScoreModeSelect.setAttribute("size", 3)
+            
+            // Create all options
+            const scorev2Option = document.createElement("option")
+            scorev2Option.value = "scoreV2"
+            scorev2Option.innerText = "Score V2"
+            whichScoreModeSelect.append(scorev2Option)
+
+            const scorev1Option = document.createElement("option")
+            scorev1Option.value = "scoreV1"
+            scorev1Option.innerText = "Score V1"
+            whichScoreModeSelect.append(scorev1Option)
+
+            const accuracyOption = document.createElement("option")
+            accuracyOption.value = "acc"
+            accuracyOption.innerText = "Accuracy"
+            whichScoreModeSelect.append(accuracyOption)
+
+            whichScoreModeSelect.append(scorev2Option, scorev1Option, accuracyOption)
+            sideBarColumn2El.append(header, whosePickButtonContainer, whichScoreModeHeader,whichScoreModeSelect)
         } else {
             sideBarColumn2El.append(header, whosePickButtonContainer)
         }
@@ -522,6 +543,7 @@ pickBanManagementSelectEl.addEventListener("change", () => {
         case "removeBan": applyChangesButton.addEventListener("click", applyChangesRemoveBan); break;
         case "setPick": applyChangesButton.addEventListener("click", applyChangesSetPick); break;
         case "removePick": applyChangesButton.addEventListener("click", applyChangesRemovePick); break;
+        case "setScoreMode": applyChangesButton.addEventListener("click", applyChangesSetScoreMode); break;
     }
 
     sideBarColumn2El.append(applyChangesButton)
@@ -624,4 +646,25 @@ function applyChangesRemovePick() {
     currentTile.children[0].style.backgroundImage = "none"
     currentTile.children[1].style.display = "none"
     currentTile.children[3].innerText = ""
+    currentTile.children[4].innerText = ""
+}
+
+function applyChangesSetScoreMode() {
+    console.log(pickBanManagementSelectedPick)
+    if (!pickBanManagementSelectedPick) return
+    const pickBanManagementSelectedPickSplit = pickBanManagementSelectedPick.split("_")
+    const whichScoreModeSelectValue = document.getElementById("whichScoreModeSelect").value
+    console.log(whichScoreModeSelectValue)
+
+    // Get container
+    const currentContainer = (pickBanManagementSelectedPickSplit[0] === "red")? redPickSectionEl : bluePickSectionEl
+    const currentTile = currentContainer.children[parseInt(pickBanManagementSelectedPickSplit[1] - 1)]
+    console.log(currentTile)
+    console.log(currentTile.children[4])
+    
+    switch (whichScoreModeSelectValue) {
+        case "scoreV2": currentTile.children[4].innerText = ""; break;
+        case "scoreV1": currentTile.children[4].innerText = "Sv1"; break;
+        case "acc": currentTile.children[4].innerText = "Acc"; break;
+    }
 }
