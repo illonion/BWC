@@ -62,7 +62,7 @@ setInterval(() => {
         // Set team banner
         const currentTeam = findTeamByTeamName(winningTeamName)
         if (currentTeam) {
-            teamBannerEl.style.backgroundImage = `url("${currentTeam.team_banner}")`
+            teamBannerEl.style.backgroundImage = `url("../banners/${winningTeamName}.png")`
         }
     }
     previousTeamName = winningTeamName
