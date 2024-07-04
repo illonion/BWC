@@ -426,6 +426,7 @@ pickBanManagementSelectEl.addEventListener("change", () => {
     // Reset to default
     while (sideBarColumn2El.childElementCount > 3) sideBarColumn2El.lastChild.remove()
     pickBanSelectedMap = undefined
+    pickBanManagementSelectedPick = undefined
 
     if (currentPickBanManagementAction === "setBan" || currentPickBanManagementAction === "removeBan") {
         // Create header
@@ -466,6 +467,49 @@ pickBanManagementSelectEl.addEventListener("change", () => {
         } else sideBarColumn2El.append(header, setBanSelect)
     }
 
+    // 
+    if (currentPickBanManagementAction === "setPick") {
+        // Create header
+        const header = document.createElement("h2")
+        header.innerText = "Whose pick?"
+
+        // Create Select
+        const whosePickButtonContainer = document.createElement("div")
+        whosePickButtonContainer.classList.add("whosePickButtonContainer")
+        for (let i = 0; i < currentFirstTo * 2; i++) {
+            const whosePickButton = document.createElement("button")
+            whosePickButton.classList.add("whosePickButton")
+            whosePickButton.innerText = `${(i % 2 === 0)? "Red" : "Blue"} Pick ${Math.ceil(i / 2) + 1}`
+            whosePickButton.setAttribute("id", `${(i % 2 === 0)? "red": "blue"}_${Math.ceil(i / 2) + 1}`)
+            whosePickButton.addEventListener("click", changePickBanSelectedPick)
+            whosePickButtonContainer.append(whosePickButton)
+        }
+
+        // Which map
+        if (currentPickBanManagementAction === "setPick") {
+            // Which map header
+            const whichMapHeader = document.createElement("h2")
+            whichMapHeader.innerText = "Which map?"
+
+            // Create buttons
+            const whichMapButtonContainer = document.createElement("div")
+            whichMapButtonContainer.classList.add("whichMapButtonContainer")
+            for (let i = 0; i < allBeatmaps.length; i++) {
+                const whichMapButton = document.createElement("button")
+                whichMapButton.classList.add("whichMapButton")
+                whichMapButton.innerText = `${allBeatmaps[i].mod}${allBeatmaps[i].order}`
+                whichMapButton.dataset.id = allBeatmaps[i].beatmapID
+                whichMapButton.dataset.action = "pickBanManagementBan"
+                whichMapButton.addEventListener("click", changePickBanSelectedMap)
+                whichMapButtonContainer.append(whichMapButton)
+            }
+
+            sideBarColumn2El.append(header, whosePickButtonContainer, whichMapHeader, whichMapButtonContainer)
+        } else {
+            sideBarColumn2El.append(header, whosePickButtonContainer)
+        }
+    }
+
     // Apply changes button
     const applyChangesButton = document.createElement("button")
     applyChangesButton.classList.add("sideBarButton")
@@ -476,6 +520,7 @@ pickBanManagementSelectEl.addEventListener("change", () => {
     switch (currentPickBanManagementAction) {
         case "setBan": applyChangesButton.addEventListener("click", applyChangesSetBan); break;
         case "removeBan": applyChangesButton.addEventListener("click", applyChangesRemoveBan); break;
+        case "setPick": applyChangesButton.addEventListener("click", applyChangesSetPick); break;
     }
 
     sideBarColumn2El.append(applyChangesButton)
@@ -533,4 +578,32 @@ function applyChangesRemoveBan() {
     currentTile.children[0].style.backgroundImage = "none"
     currentTile.children[1].style.display = "none"
     currentTile.children[3].innerText = ""
+}
+
+// Change whose pick
+const whosePickButtonEls = document.getElementsByClassName("whosePickButton")
+let pickBanManagementSelectedPick
+function changePickBanSelectedPick() {
+    pickBanManagementSelectedPick = this.id
+    for (let i = 0; i < whosePickButtonEls.length; i++) {
+        whosePickButtonEls[i].style.backgroundColor = "transparent"
+    }
+    this.style.backgroundColor = "rgb(206,206,206)"
+}
+
+// Apply Changes Set Pick
+function applyChangesSetPick() {
+    if (!pickBanManagementSelectedPick || !pickBanSelectedMap) return
+    const pickBanManagementSelectedPickSplit = pickBanManagementSelectedPick.split("_")
+
+    // Get container
+    const currentContainer = (pickBanManagementSelectedPickSplit[0] === "red")? redPickSectionEl : bluePickSectionEl
+    const currentTile = currentContainer.children[parseInt(pickBanManagementSelectedPickSplit[1] - 1)]
+
+    // Apply information to current tile
+    currentTile.dataset.id = pickBanSelectedMap.beatmapID
+    currentTile.dataset.action = "pick"
+    currentTile.children[0].style.backgroundImage = `url("${pickBanSelectedMap.imgURL}")`
+    currentTile.children[1].style.display = "block"
+    currentTile.children[3].innerText= `${pickBanSelectedMap.mod}${pickBanSelectedMap.order}`
 }
