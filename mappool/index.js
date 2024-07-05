@@ -176,7 +176,7 @@ socket.onmessage = event => {
         redTeamNameEl.innerText = currentRedTeamName
         const currentTeam = findTeamByTeamName(currentRedTeamName)
         if (currentTeam) {
-            redTeamBannerEl.style.backgroundImage = `url("${currentTeam.team_banner}")`
+            redTeamBannerEl.style.backgroundImage = `url("../banners/${currentRedTeamName}.png")`
         }
     }
     if (currentBlueTeamName !== data.tourney.manager.teamName.right) {
@@ -184,7 +184,7 @@ socket.onmessage = event => {
         blueTeamNameEl.innerText = currentBlueTeamName
         const currentTeam = findTeamByTeamName(currentBlueTeamName)
         if (currentTeam) {
-            blueTeamBannerEl.style.backgroundImage = `url("${currentTeam.team_banner}")`
+            blueTeamBannerEl.style.backgroundImage = `url("../banners/${currentBlueTeamName}.png")`
         }
     }
 
@@ -470,8 +470,8 @@ pickBanManagementSelectEl.addEventListener("change", () => {
         for (let i = 0; i < currentFirstTo * 2; i++) {
             const whosePickButton = document.createElement("button")
             whosePickButton.classList.add("whosePickButton")
-            whosePickButton.innerText = `${(i % 2 === 0)? "Red" : "Blue"} Pick ${Math.ceil(i / 2) + 1}`
-            whosePickButton.setAttribute("id", `${(i % 2 === 0)? "red": "blue"}_${Math.ceil(i / 2) + 1}`)
+            whosePickButton.innerText = `${(i % 2 === 0)? "Red" : "Blue"} Pick ${Math.floor(i / 2) + 1}`
+            whosePickButton.setAttribute("id", `${(i % 2 === 0)? "red": "blue"}_${Math.floor(i / 2) + 1}`)
             whosePickButton.addEventListener("click", changePickBanSelectedPick)
             whosePickButtonContainer.append(whosePickButton)
         }
