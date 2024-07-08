@@ -42,7 +42,8 @@ function setLetterSpacing(element) {
 getMappool()
 
 // Find map in mappol
-const findMapInMappool = (beatmapID) => allBeatmaps.find(beatmap => beatmap.beatmapID == beatmapID) || null
+const findMapInMappoolById = (beatmapID) => allBeatmaps.find(beatmap => beatmap.beatmapID == beatmapID) || null
+const findMapInMappoolBySongName = (songName, difficultyName) => allBeatmaps.find(beatmap => beatmap.songName == songName && beatmap.difficultyname == difficultyName) || null
 
 // Socket Events
 // Credits: VictimCrasher - https://github.com/VictimCrasher/static/tree/master/WaveTournament
@@ -86,29 +87,10 @@ socket.onmessage = async (event) => {
         mapperNameEl.innerText = data.menu.bm.metadata.mapper
         difficultyNameEl.innerText = data.menu.bm.metadata.difficulty
 
-        const currentMap = findMapInMappool(currentId)
-        if (currentMap) {
-            foundMapInMappool = true
-
-            // Set map details for everything
-            // Length
-            let lengthSeconds = parseInt(currentMap.songLength)
-            let lengthMinutes = Math.floor(lengthSeconds / 60)
-            let remainderSeconds = lengthSeconds % 60
-            statsLengthEl.innerText = `${lengthMinutes}:${("0" + remainderSeconds.toString()).slice(-2)}`
-            // SR
-            statsSREl.innerText = Math.round(parseFloat(currentMap.difficultyrating) * 100) / 100
-            // BPM
-            statsBPMEl.innerText = parseFloat(currentMap.bpm)
-            // AR
-            statsAREl.innerText = Math.round(parseFloat(currentMap.ar) * 10) / 10
-            // CS
-            statsCSEl.innerText = Math.round(parseFloat(currentMap.cs) * 10) / 10
-            // HP
-            statsHPEl.innerText = Math.round(parseFloat(currentMap.hp) * 10) / 10
-            // OD
-            statsODEl.innerText = Math.round(parseFloat(currentMap.od) * 10) / 10
-        }
+        const currentMapById = findMapInMappoolById(currentId)
+        const currentMapByName = findMapInMappoolBySongName(data.menu.bm.metadata.title, data.menu.bm.metadata.difficulty)
+        if (currentMapById) { showMapStatsFromPoolMap(currentMapById) }
+        else if (currentMapByName) { showMapStatsFromPoolMap(currentMapByName) }
     }
     // Stats
     if (!foundMapInMappool) {
@@ -136,4 +118,27 @@ socket.onmessage = async (event) => {
         replayByUsername = data.resultsScreen.name
         replayByUsernameEl.innerText = replayByUsername.toUpperCase()
     }
+}
+
+function showMapStatsFromPoolMap(currentMap) {
+    foundMapInMappool = true
+
+    // Set map details for everything
+    // Length
+    let lengthSeconds = parseInt(currentMap.songLength)
+    let lengthMinutes = Math.floor(lengthSeconds / 60)
+    let remainderSeconds = lengthSeconds % 60
+    statsLengthEl.innerText = `${lengthMinutes}:${("0" + remainderSeconds.toString()).slice(-2)}`
+    // SR
+    statsSREl.innerText = Math.round(parseFloat(currentMap.difficultyrating) * 100) / 100
+    // BPM
+    statsBPMEl.innerText = parseFloat(currentMap.bpm)
+    // AR
+    statsAREl.innerText = Math.round(parseFloat(currentMap.ar) * 10) / 10
+    // CS
+    statsCSEl.innerText = Math.round(parseFloat(currentMap.cs) * 10) / 10
+    // HP
+    statsHPEl.innerText = Math.round(parseFloat(currentMap.hp) * 10) / 10
+    // OD
+    statsODEl.innerText = Math.round(parseFloat(currentMap.od) * 10) / 10
 }
