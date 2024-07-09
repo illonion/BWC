@@ -45,6 +45,8 @@ const teamNameEl = document.getElementById("teamName")
 let previousTeamName
 
 // Team stars
+const winnerScoreEl = document.getElementById("winnerScore")
+const loserScoreEl = document.getElementById("loserScore")
 const teamStarsEl = document.getElementById("teamStars")
 let previousTeamStarCount, previousFirstTo
 
@@ -74,21 +76,7 @@ setInterval(() => {
         previousTeamStarCount = currentTeamStarCount
         previousFirstTo = currentFirstTo
 
-        // Reset stars
-        teamStarsEl.innerHTML = ""
-        if (currentFirstTo === 0) return
-        
-        // Create stars
-        function createStar(fill) {
-            const teamStar = document.createElement("div")
-            teamStar.classList.add("teamStar")
-            if (fill) teamStar.classList.add("teamStarFill")
-            return teamStar
-        }
-
-        // Display stars
-        let i = 0
-        for (i; i < currentTeamStarCount; i++) teamStarsEl.append(createStar(true))
-        for (i; i < currentFirstTo; i++) teamStarsEl.append(createStar(false))
+        winnerScoreEl.innerText = previousFirstTo
+        loserScoreEl.innerText = previousTeamStarCount
     }
 }, 500)

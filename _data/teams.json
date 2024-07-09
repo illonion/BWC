@@ -360,7 +360,7 @@
       "team_seed": 28
     },
     {
-      "team_name": "all(most)digitteam",
+      "team_name": "all[most]digitteam",
       "player_ids": [
         20304423,
         35056194,

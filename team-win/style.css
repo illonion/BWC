@@ -51,14 +51,8 @@
 }
 
 /* Team Stars */
-#teamStars {
+#teamScores {
     position: absolute; top: 807.3px;
-    display: flex;
+    font-size: 100px;
+    color: var(--starColour);
 }
-.teamStar {
-    width: 48.32px; height: 48.32px;
-    box-shadow: inset 0 0 0 11.66px var(--starColour);
-    border-radius: 48.32px;
-    margin-right: 62.7px;
-}
-.teamStarFill { background-color: var(--starColour); }
