@@ -56,3 +56,24 @@
     font-size: 100px;
     color: var(--starColour);
 }
+
+/* Player Information */
+#teamInformation {
+    position: absolute; left: 1225px; top: 60%;
+    transform: translateY(-50%);
+    height: 1000px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+.playerInformation {
+    margin: 5px 0;
+    display: flex;
+}
+.playerImage { width: 90px; }
+.playerName { 
+    height: 90px;
+    line-height: 90px; 
+    font-size: 35px;
+    margin-left: 20px;
+}
