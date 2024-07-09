@@ -48,6 +48,7 @@
     position: absolute; top: 701px;
     font-size: 67.64px;
     letter-spacing: 10.7854px;
+    color: var(--starColour);
 }
 
 /* Team Stars */
@@ -76,4 +77,5 @@
     line-height: 90px; 
     font-size: 35px;
     margin-left: 20px;
+    color: var(--starColour);
 }

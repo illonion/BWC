@@ -44,11 +44,13 @@ const teamBannerEl = document.getElementById("teamBanner")
 const teamNameEl = document.getElementById("teamName")
 let previousTeamName
 
-// Team stars
+// Team scores
 const winnerScoreEl = document.getElementById("winnerScore")
 const loserScoreEl = document.getElementById("loserScore")
-const teamStarsEl = document.getElementById("teamStars")
 let previousTeamStarCount, previousFirstTo
+
+// Team information
+const teamInformationEl = document.getElementById("teamInformation")
 
 setInterval(() => {
     // Set background for winning side
@@ -61,10 +63,31 @@ setInterval(() => {
     teamNameEl.innerText = winningTeamName
 
     if (previousTeamName !== winningTeamName) {
-        // Set team banner
+        // Set team banner and team members
+
         const currentTeam = findTeamByTeamName(winningTeamName)
         if (currentTeam) {
             teamBannerEl.style.backgroundImage = `url("../banners/${winningTeamName}.png")`
+
+            // Reset team information
+            teamInformationEl.innerHTML = ""
+
+            for (let i = 0; i < currentTeam.player_ids.length; i++) {
+                const newPlayerInformation = document.createElement("div")
+                newPlayerInformation.classList.add("playerInformation")
+
+                const newPlayerProfilePicture = document.createElement("img")
+                newPlayerProfilePicture.classList.add("playerImage")
+                newPlayerProfilePicture.setAttribute("src", `https://a.ppy.sh/${currentTeam.player_ids[i]}`)
+                console.log(`https://a.ppy.sh/${currentTeam.player_ids[i]}`)
+
+                const newPlayerName = document.createElement("div")
+                newPlayerName.classList.add("playerName")
+                newPlayerName.innerText = currentTeam.player_names[i].toUpperCase()
+
+                newPlayerInformation.append(newPlayerProfilePicture, newPlayerName)
+                teamInformationEl.append(newPlayerInformation)
+            }
         }
     }
     previousTeamName = winningTeamName
