@@ -8,7 +8,7 @@ const redBanCardsContainerEl = document.getElementById("redBanCardsContainer")
 const blueBanCardsContainerEl = document.getElementById("blueBanCardsContainer")
 const redPickSectionEl = document.getElementById("redPickSection")
 const bluePickSectionEl = document.getElementById("bluePickSection")
-let currentBanNumber
+let currentFirstTo, currentBanNumber
 let allBeatmaps
 
 // Load in mappool
@@ -156,7 +156,7 @@ const blueTeamBannerEl = document.getElementById("blueTeamBanner")
 const blueTeamNameEl = document.getElementById("blueTeamName")
 const blueTeamStarsEl = document.getElementById("blueTeamStars")
 let currentRedTeamName, currentBlueTeamName
-let currentBestOf, currentFirstTo, currentRedTeamStarCount, currentBlueTeamStarCount
+let currentBestOf, currentRedTeamStarCount, currentBlueTeamStarCount
 
 // Chat information
 const chatDisplayEl = document.getElementById("chatDisplay")
@@ -243,7 +243,7 @@ socket.onmessage = event => {
 
         // Set all numbers
         currentBestOf = data.tourney.manager.bestOF
-        currentFirstTo = Math.ceil(currentBestOf / 2)
+        let currentFirstTo = Math.ceil(currentBestOf / 2)
         currentRedTeamStarCount = data.tourney.manager.stars.left
         currentBlueTeamStarCount = data.tourney.manager.stars.right
 
@@ -360,13 +360,25 @@ socket.onmessage = event => {
     // Set IPC State
     if (currentIPCState !== data.tourney.manager.ipcState) {
         currentIPCState = data.tourney.manager.ipcState
+        // IPC State is generally 1
         if (previousIPCState === 4 && currentIPCState !== previousIPCState) {   
             document.cookie = `currentScoreMode=v2; path=/`
             if (enableAutoAdvance) {
-                if ()
-            }
+                if (currentRedTeamStarCount !== Math.ceil(currentBestOf) && currentBlueTeamStarCount !== Math.ceil(currentBestOf)) {
+                    if (scene.name === mappool_scene_name) return
+                    obsSetCurrentScene(mappool_scene_name)
+                } else {
+                    if (scene.name === tema_win_scene_name) return
+                    obsSetCurrentScene(tema_win_scene_name)
+                }
+            }                                                                                                              
         }
         previousIPCState = currentIPCState
+
+        if ((currentIPCState === 2 || currentIPCState === 3) && enableAutoAdvance) {
+            if (scene.name === gameplay_scene_name) return
+            obsSetCurrentScene(gameplay_scene_name)
+        }
     }
 }
 
