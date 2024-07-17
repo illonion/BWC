@@ -8,7 +8,7 @@ const redBanCardsContainerEl = document.getElementById("redBanCardsContainer")
 const blueBanCardsContainerEl = document.getElementById("blueBanCardsContainer")
 const redPickSectionEl = document.getElementById("redPickSection")
 const bluePickSectionEl = document.getElementById("bluePickSection")
-let currentFirstTo, currentBanNumber
+let currentBanNumber
 let allBeatmaps
 
 // Load in mappool
@@ -156,7 +156,7 @@ const blueTeamBannerEl = document.getElementById("blueTeamBanner")
 const blueTeamNameEl = document.getElementById("blueTeamName")
 const blueTeamStarsEl = document.getElementById("blueTeamStars")
 let currentRedTeamName, currentBlueTeamName
-let currentBestOf, currentRedTeamStarCount, currentBlueTeamStarCount
+let currentBestOf, currentFirstTo, currentRedTeamStarCount, currentBlueTeamStarCount
 
 // Chat information
 const chatDisplayEl = document.getElementById("chatDisplay")
@@ -170,6 +170,51 @@ let recentPickTile
 // IPC State
 let previousIPCState
 let currentIPCState
+
+// OBS Information
+const sceneCollection = document.getElementById("sceneCollection")
+let autoadvance_button = document.getElementById('autoAdvanceButton')
+let autoadvance_timer_container = document.getElementById('autoAdvanceTimer')
+let autoadvance_timer_label = document.getElementById('autoAdvanceTimerLabel')
+
+let enableAutoAdvance = false
+const gameplay_scene_name = "Gameplay"
+const mappool_scene_name = "Mappool"
+const tema_win_scene_name = "Team Win"
+
+function switchAutoAdvance() {
+    enableAutoAdvance = !enableAutoAdvance
+    if (enableAutoAdvance) {
+        autoadvance_button.innerText = 'AUTO ADVANCE: ON'
+        autoadvance_button.style.backgroundColor = '#9ffcb3'
+    } else {
+        autoadvance_button.innerText = 'AUTO ADVANCE: OFF'
+        autoadvance_button.style.backgroundColor = '#fc9f9f'
+    }
+}
+
+const obsGetCurrentScene = window.obsstudio?.getCurrentScene ?? (() => {})
+const obsGetScenes = window.obsstudio?.getScenes ?? (() => {})
+const obsSetCurrentScene = window.obsstudio?.setCurrentScene ?? (() => {})
+
+obsGetScenes(scenes => {
+    for (const scene of scenes) {
+        let clone = document.getElementById("sceneButtonTemplate").content.cloneNode(true)
+        let buttonNode = clone.querySelector('div')
+        buttonNode.id = `scene__${scene}`
+        buttonNode.textContent = `GO TO: ${scene}`
+        buttonNode.onclick = function() { obsSetCurrentScene(scene); }
+        sceneCollection.appendChild(clone)
+    }
+
+    obsGetCurrentScene((scene) => { document.getElementById(`scene__${scene.name}`).classList.add("activeScene") })
+})
+
+window.addEventListener('obsSceneChanged', function(event) {
+    let activeButton = document.getElementById(`scene__${event.detail.name}`)
+    for (const scene of sceneCollection.children) { scene.classList.remove("activeScene") }
+    activeButton.classList.add("activeScene")
+})
 
 socket.onmessage = event => {
     const data = JSON.parse(event.data)
@@ -198,7 +243,7 @@ socket.onmessage = event => {
 
         // Set all numbers
         currentBestOf = data.tourney.manager.bestOF
-        let currentFirstTo = Math.ceil(currentBestOf / 2)
+        currentFirstTo = Math.ceil(currentBestOf / 2)
         currentRedTeamStarCount = data.tourney.manager.stars.left
         currentBlueTeamStarCount = data.tourney.manager.stars.right
 
@@ -317,6 +362,9 @@ socket.onmessage = event => {
         currentIPCState = data.tourney.manager.ipcState
         if (previousIPCState === 4 && currentIPCState !== previousIPCState) {   
             document.cookie = `currentScoreMode=v2; path=/`
+            if (enableAutoAdvance) {
+                if ()
+            }
         }
         previousIPCState = currentIPCState
     }

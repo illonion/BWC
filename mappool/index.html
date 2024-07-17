@@ -69,7 +69,7 @@
                 </div>
             </section>
         </section>
-        <div id="divider"></div>
+        <div class="divider" id="divider1"></div>
         <section class="sideBarColumn" id="sideBarColumn2">
             <h1>Pick Ban Management System</h1>
             <h2 id="pickBanManagementSelectAction">Select an action</h2>
@@ -81,6 +81,16 @@
                 <option value="setScoreMode">Set Score Mode</option>
             </select>
         </section>
+        <div class="divider" id="divider2"></div>
+        <section class="sideBarColumn" id="sideBarColumn3">
+            <button id="autoAdvanceButton" class="fullSizeButton sideBarButton" onclick="switchAutoAdvance()">AUTO ADVANCE: OFF</button>
+            <h1 class="controlLabel">Scenes<br>(click to override)
+            <div id="sceneCollection">
+                <template id="sceneButtonTemplate">
+                    <div class="fullSizeButton sideBarButton">SWITCH TO __SCENE_NAME__</div>
+                </template>
+            </div>
+        </section> 
     </div>
 
     <script src="../_shared/deps/reconnecting-websocket.min.js"></script>

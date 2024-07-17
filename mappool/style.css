@@ -210,16 +210,21 @@
 /* Side Bar */
 #sideBar {
     position: absolute; left: 1920px; top: 0;
-    width: 500px; height: 1080px;
+    width: 750px; height: 1080px;
     background-color: var(--grayColour);
 }
+/* Side Bar Columns */
 .sideBarColumn { width: 250px; }
 #sideBarColumn2 { position: absolute; left: 250px; top: 0; }
-#divider {
-    position: absolute; left: 249px; top: 0;
+#sideBarColumn3 { position: absolute; left: 500px; top: 0; }
+/* Dividers */
+.divider {
+    position: absolute; top: 0;
     width: 2px; height: inherit;
     background-color: black;
 }
+#divider1 { left: 249px; }
+#divider2 { left: 499px; }
 h1 {
     font-family: "Aaux Next"; font-weight: 800; font-size: 24px;
     margin: 5px 15px;
@@ -301,3 +306,10 @@ h2 { margin-top: 15px; }
     margin-left: 25px;
     width: 200px;
 }
+
+/* Auto Advance Section */
+.fullSizeButton {
+    margin: 10px 20px;
+    width: 210px;
+}
+#sceneCollection { margin-left: -15px; }
