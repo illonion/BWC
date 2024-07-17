@@ -61,9 +61,10 @@
     <div id="sideBar">
         <h1 id="sideBarCurrentScoringSystemText">Current Scoring System</h1>
         <div id="currentScoringSystemText">Score</div>
-        <button class="sideBarFullButton" onclick="setScoringSystem('score')">Score</button>
-        <button class="sideBarFullButton" onclick="setScoringSystem('accuracy')">Accuracy</button>
-        <p id="sideBarCurrentScoringSystemWarningText">Please note that the score system will reset to Score V2 after every map</p>
+        <button class="sideBarFullButton" onclick="setScoringSystemManual('score')">Score</button>
+        <button class="sideBarFullButton" onclick="setScoringSystemManual('accuracy')">Accuracy</button>
+        <button class="sideBarFullButton" onclick="turnOverrideScoringSystemOff()">Mappool scene sync</button>
+        <p id="sideBarCurrentScoringSystemWarningText">Please note that the score system will default to "mappool scene sync" and reset to Score V2 after every map</p>
     </div>
 
     <script src="../_shared/deps/reconnecting-websocket.min.js"></script>

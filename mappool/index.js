@@ -167,6 +167,10 @@ let chatLength = 0
 let currentId, currentMd5, foundMapInMappool
 let recentPickTile
 
+// IPC State
+let previousIPCState
+let currentIPCState
+
 socket.onmessage = event => {
     const data = JSON.parse(event.data)
 
@@ -307,6 +311,15 @@ socket.onmessage = event => {
         
         if (currentButton) currentButton.click()
     }
+
+    // Set IPC State
+    if (currentIPCState !== data.tourney.manager.ipcState) {
+        currentIPCState = data.tourney.manager.ipcState
+        if (previousIPCState === 4 && currentIPCState !== previousIPCState) {   
+            document.cookie = `currentScoreMode=v2; path=/`
+        }
+        previousIPCState = currentIPCState
+    }
 }
 
 // Next Action
@@ -405,6 +418,8 @@ function setScoreMode(scoreMode) {
         case "v1": recentPickTile.children[4].innerText = "Sv1"; break;
         case "acc": recentPickTile.children[4].innerText = "Acc"; break;
     }
+
+    document.cookie = `currentScoreMode=${scoreMode}; path=/`
 }
 
 // Pick Ban Management System

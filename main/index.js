@@ -82,6 +82,35 @@ function setScoringSystem(system) {
     }
 }
 
+// Get Cookie
+function getCookie(cname) {
+    let name = cname + "="
+    let ca = document.cookie.split(';')
+    for(let i = 0; i < ca.length; i++) {
+        let c = ca[i]
+        while (c.charAt(0) == ' ') c = c.substring(1)
+        if (c.indexOf(name) == 0) return c.substring(name.length, c.length);
+    }
+    return "";
+}
+
+let overrideCookie = false
+setInterval(() => { if (!overrideCookie) setScoringSystemAutomatic() }, 500)
+
+// Set scoring system manual
+function setScoringSystemManual(system) {
+    overrideCookie = true
+    setScoringSystem(system)
+}
+
+function setScoringSystemAutomatic() {
+    let currentScoreSystem = getCookie("currentScoreMode")
+    if (currentScoreSystem === "v1" || currentScoreSystem === "v2") setScoringSystem("score")
+    else setScoringSystem("accuracy")
+}
+
+const turnOverrideScoringSystemOff = () => overrideCookie = false
+
 // IPC States
 let currentIPCState = 0
 let previousIPCState = 0
@@ -223,7 +252,10 @@ socket.onmessage = async (event) => {
     // This is only used for setting the score system
     if (currentIPCState !== data.tourney.manager.ipcState) {
         currentIPCState = data.tourney.manager.ipcState
-        if (previousIPCState === 4 && currentIPCState !== previousIPCState) setScoringSystem("score")
+        if (previousIPCState === 4 && currentIPCState !== previousIPCState) {
+            overrideCookie = false
+            setScoringSystem("score")
+        }
         previousIPCState = currentIPCState
     }
 
