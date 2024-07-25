@@ -336,7 +336,6 @@ socket.onmessage = event => {
             behavior: 'smooth'
         })
     }
-    console.log(data)
 
     // Put in correct stats for mappool map
     if ((currentId !== data.menu.bm.id || currentMd5 !== data.menu.bm.md5) && allBeatmaps) {
@@ -354,7 +353,15 @@ socket.onmessage = event => {
             }
         })
         
-        if (currentButton) currentButton.click()
+        if (currentButton) {
+            currentButton.click()
+            if (enableAutoAdvance) {
+                obsGetCurrentScene((scene) => {
+                    if (scene.name === gameplay_scene_name) return
+                    obsSetCurrentScene(gameplay_scene_name)
+                })
+            }
+        }
     }
 
     // Set IPC State
@@ -365,20 +372,27 @@ socket.onmessage = event => {
             document.cookie = `currentScoreMode=v2; path=/`
             if (enableAutoAdvance) {
                 if (currentRedTeamStarCount !== Math.ceil(currentBestOf) && currentBlueTeamStarCount !== Math.ceil(currentBestOf)) {
-                    if (scene.name === mappool_scene_name) return
-                    obsSetCurrentScene(mappool_scene_name)
-                } else {
-                    if (scene.name === tema_win_scene_name) return
-                    obsSetCurrentScene(tema_win_scene_name)
+                    obsGetCurrentScene((scene) => {
+                        if (scene.name === mappool_scene_name) return
+                        obsSetCurrentScene(mappool_scene_name)
+                    })
+                }
+                else {
+                    obsGetCurrentScene((scene) => {
+                        if (scene.name === tema_win_scene_name) return
+                        obsSetCurrentScene(tema_win_scene_name)
+                    })
                 }
             }                                                                                                              
         }
         previousIPCState = currentIPCState
+    }
 
-        if ((currentIPCState === 2 || currentIPCState === 3) && enableAutoAdvance) {
+    if ((currentIPCState === 2 || currentIPCState === 3) && enableAutoAdvance) {
+        obsGetCurrentScene((scene) => {
             if (scene.name === gameplay_scene_name) return
             obsSetCurrentScene(gameplay_scene_name)
-        }
+        })
     }
 }
 
@@ -650,8 +664,8 @@ function applyChangesSetBan() {
     const currentTile = currentContainer.children[parseInt(setBanSelectElValueSplit[1] - 1)]
 
     // Apply information to current tile
-    currentTile.dataset.id === pickBanSelectedMap.beatmapID
-    currentTile.dataset.action === "ban"
+    currentTile.dataset.id = pickBanSelectedMap.beatmapID
+    currentTile.dataset.action = "ban"
     currentTile.children[0].style.backgroundImage = `url("${pickBanSelectedMap.imgURL}")`
     currentTile.children[1].style.display = "block"
     currentTile.children[3].innerText = `${pickBanSelectedMap.mod}${pickBanSelectedMap.order}`
@@ -725,17 +739,13 @@ function applyChangesRemovePick() {
 }
 
 function applyChangesSetScoreMode() {
-    console.log(pickBanManagementSelectedPick)
     if (!pickBanManagementSelectedPick) return
     const pickBanManagementSelectedPickSplit = pickBanManagementSelectedPick.split("_")
     const whichScoreModeSelectValue = document.getElementById("whichScoreModeSelect").value
-    console.log(whichScoreModeSelectValue)
 
     // Get container
     const currentContainer = (pickBanManagementSelectedPickSplit[0] === "red")? redPickSectionEl : bluePickSectionEl
     const currentTile = currentContainer.children[parseInt(pickBanManagementSelectedPickSplit[1] - 1)]
-    console.log(currentTile)
-    console.log(currentTile.children[4])
     
     switch (whichScoreModeSelectValue) {
         case "scoreV2": currentTile.children[4].innerText = ""; break;
