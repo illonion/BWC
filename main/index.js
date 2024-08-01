@@ -36,10 +36,12 @@ const blueTeamStarsEl = document.getElementById("blueTeamStars")
 let currentBestOf, currentFirstTo, currentRedStars, currentBlueStars
 
 // Score Section
+const teamScoresEl = document.getElementById("teamScores")
 const redTeamScoreNumberEl = document.getElementById("redTeamScoreNumber")
 const blueTeamScoreNumberEl = document.getElementById("blueTeamScoreNumber")
 const redTeamAccuracyNumberEl = document.getElementById("redTeamAccuracyNumber")
 const blueTeamAccuracyNumberEl = document.getElementById("blueTeamAccuracyNumber")
+const scoreDeltasEl = document.getElementById("scoreDeltas")
 const teamScoreNumberDeltaEl = document.getElementById("teamScoreNumberDelta")
 const teamScoreAccuracyDeltaEl = document.getElementById("teamScoreAccuracyDelta")
 let currentScoreRed, currentScoreBlue, currentScoreDelta
@@ -116,6 +118,7 @@ let currentIPCState = 0
 let previousIPCState = 0
 
 // Moving score bar
+const movingScoreBarsEl = document.getElementById("movingScoreBars")
 const redTeamMovingScoreBarEl = document.getElementById("redTeamMovingScoreBar")
 const blueTeamMovingScoreBarEl = document.getElementById("blueTeamMovingScoreBar")
 
@@ -123,6 +126,7 @@ const blueTeamMovingScoreBarEl = document.getElementById("blueTeamMovingScoreBar
 const mapBoxContainerEl = document.getElementById("mapBoxContainer")
 const mapBoxContainerTextEl = document.getElementById("mapBoxContainerText")
 const songNameEl = document.getElementById("songName")
+const songStatsEl = document.getElementById("songStats")
 const songStatsSREl = document.getElementById("songStatsSR")
 const songStatsAREl = document.getElementById("songStatsAR")
 const songStatsCSEl = document.getElementById("songStatsCS")
@@ -131,6 +135,14 @@ const songStatsBPMEl = document.getElementById("songStatsBPM")
 const songStatLENsEl = document.getElementById("songStatLENs")
 let currentId, currentMd5
 let foundMapInMappool = false
+
+// Chat information
+const chatDisplayEl = document.getElementById("chatDisplay")
+const chatDisplayContainerEl = document.getElementById("chatDisplayContainer")
+let chatLength = 0
+
+// Score visibility
+let isScoreVisible
 
 socket.onmessage = async (event) => {
     const data = JSON.parse(event.data) 
@@ -289,6 +301,80 @@ socket.onmessage = async (event) => {
         songStatsODEl.innerText = data.menu.bm.stats.OD
         songStatsBPMEl.innerText = data.menu.bm.stats.BPM.common
         displayLength(Math.round(data.menu.bm.time.full / 1000))
+    }
+
+    // Chat Display
+    if (chatLength !== data.tourney.manager.chat.length) {
+        // Chat stuff
+        // This is also mostly taken from Victim Crasher: https://github.com/VictimCrasher/static/tree/master/WaveTournament
+        (chatLength === 0 || chatLength > data.tourney.manager.chat.length) ? (chatDisplayContainerEl.innerHTML = "", chatLength = 0) : null;
+        const fragment = document.createDocumentFragment()
+
+        for (let i = chatLength; i < data.tourney.manager.chat.length; i++) {
+            const chatColour = data.tourney.manager.chat[i].team
+
+            // Chat message container
+            const chatMessageContainer = document.createElement("div")
+            chatMessageContainer.classList.add("chatMessageContainer")
+        
+            // Time
+            const chatTime = document.createElement("div")
+            chatTime.classList.add("chatTime")
+            chatTime.innerText = data.tourney.manager.chat[i].time
+
+            // Whole message
+            const wholeMessage = document.createElement("div")
+            wholeMessage.classList.add("wholeMessage")
+
+            // Name
+            const messageUser = document.createElement("div")
+            messageUser.classList.add("messageUser", chatColour)
+            messageUser.innerText = `${data.tourney.manager.chat[i].name}: `
+
+            // Message
+            const messageContent = document.createElement("div")
+            messageContent.classList.add("messageContent")
+            messageContent.innerText = data.tourney.manager.chat[i].messageBody
+
+            wholeMessage.append(messageUser, messageContent)
+            chatMessageContainer.append(chatTime, wholeMessage)
+            fragment.append(chatMessageContainer)
+        }
+
+        chatDisplayContainerEl.append(fragment)
+        chatLength = data.tourney.manager.chat.length
+        chatDisplayContainerEl.scrollTo({
+            top: chatDisplayContainerEl.scrollHeight,
+            behavior: 'smooth'
+        })
+        chatDisplayEl.scrollTo({
+            top: chatDisplayContainerEl.scrollHeight,
+            behavior: 'smooth'
+        })
+    }
+
+    console.log(data)
+
+    if (isScoreVisible !== data.tourney.manager.bools.scoreVisible) {
+        isScoreVisible = data.tourney.manager.bools.scoreVisible
+
+        if (isScoreVisible) {
+            movingScoreBarsEl.style.opacity = 1
+            mapBoxContainerEl.style.opacity = 1
+            songNameEl.style.opacity = 1
+            songStatsEl.style.opacity = 1
+            teamScoresEl.style.opacity = 1
+            scoreDeltasEl.style.opacity = 1
+            chatDisplayEl.style.opacity = 0
+        } else {
+            movingScoreBarsEl.style.opacity = 0
+            mapBoxContainerEl.style.opacity = 0
+            songNameEl.style.opacity = 0
+            songStatsEl.style.opacity = 0
+            teamScoresEl.style.opacity = 0
+            scoreDeltasEl.style.opacity = 0
+            chatDisplayEl.style.opacity = 1
+        }
     }
 }
 

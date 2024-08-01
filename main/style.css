@@ -1,5 +1,7 @@
 :root {
     --starColour: #262626;
+    --redColour: #EC704A;
+    --blueColour: #00AEB7;
 }
 
 @font-face {
@@ -78,7 +80,12 @@
     width: 8.29px;
 }
 
-/* Team Score Texts */
+
+/* Team Scores */
+#teamScores {
+    transition: 500ms ease-in-out;
+    opacity: 1;
+}
 /* Team Score Text */
 .teamScoreText {
     position: absolute; top: 935px;
@@ -96,6 +103,11 @@
 .teamAccuracyNumber { display: none; }
 .blueTeamNumber { right: 46.48px; }
 
+/* Score Deltas */
+#scoreDeltas {
+    transition: 500ms ease-in-out;
+    opacity: 1;
+}
 /* Team Score Number Delta */
 .teamScoreDelta {
     position: absolute; left: 50%; top: 914px;
@@ -106,6 +118,10 @@
 #teamScoreAccuracyDelta { display: none;}
 
 /* Moving Score Bar */
+#movingScoreBars {
+    transition: 500ms ease-in-out;
+    opacity: 1;
+}
 .teamMovingScoreBar {
     position: absolute; top: 881px;
     height: 33px;
@@ -122,6 +138,8 @@
     width: 718px; height: 52px;
     background-size: cover;
     background-position: center;
+    opacity: 1;
+    transition: 500ms ease-in-out;
 }
 #mapBoxContainerLayer {
     position: absolute; left: 0; top: 0;
@@ -146,6 +164,8 @@
     position: absolute; left: 50%; 
     transform: translateX(-50%);
     font-family: "Aaux Next"; font-weight: 800; font-size: 22px;
+    opacity: 1;
+    transition: 500ms ease-in-out;
 }
 #songName { top: 1010px; }
 #songStats {
@@ -187,3 +207,40 @@
     text-align: center;
     font-family: "Aaux Next"; font-weight: 800; font-size: 16px;
 }
+
+/* Chat Display */
+#chatDisplay {
+    position: absolute; left: 449.35px; bottom: 0px;
+    width: 1010.23px; height: 164px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    color: white;
+    background-color: #686868;
+    mix-blend-mode: multiply;
+    opacity: 1;
+    transition: 500ms ease-in-out;
+}
+#chatDisplayContainer {
+    margin: 0 15px 10px;
+}
+.chatMessageContainer {
+    font-family: "Aaux Next"; font-weight: 800; font-size: 18px;
+    display: flex;
+}
+.chatTime { width: 8%; }
+.wholeMessage {
+    display: flex;
+    width: 92%;
+}
+.messageUser {
+    margin-right: 7px;
+    min-width: 100px;
+}
+::-webkit-scrollbar {
+    display: none;
+}
+
+.unknown { color: yellow; }
+.left { color: var(--redColour); }
+.right { color: var(--blueColour); }
+.bot { color: pink }

@@ -24,22 +24,28 @@
         <div id="roundName">ROUND OF 32</div>
 
         <!-- Score / Accuracy Text Section -->
-        <!-- Red Team-->
-        <div class="teamScoreText leftAlign" id="redTeamScoreText">SCORE</div>
-        <div class="teamScoreNumber leftAlign" id="redTeamScoreNumber">88888888</div>
-        <div class="teamScoreNumber teamAccuracyNumber leftAlign" id="redTeamAccuracyNumber">88.88%</div>
-        <!-- Blue Team-->
-        <div class="teamScoreText" id="blueTeamScoreText">SCORE</div>
-        <div class="teamScoreNumber blueTeamNumber" id="blueTeamScoreNumber">88888888</div>
-        <div class="teamScoreNumber teamAccuracyNumber blueTeamNumber" id="blueTeamAccuracyNumber">88.88%</div>
+        <div id="teamScores">
+            <!-- Red Team-->
+            <div class="teamScoreText leftAlign" id="redTeamScoreText">SCORE</div>
+            <div class="teamScoreNumber leftAlign" id="redTeamScoreNumber">88888888</div>
+            <div class="teamScoreNumber teamAccuracyNumber leftAlign" id="redTeamAccuracyNumber">88.88%</div>
+            <!-- Blue Team-->
+            <div class="teamScoreText" id="blueTeamScoreText">SCORE</div>
+            <div class="teamScoreNumber blueTeamNumber" id="blueTeamScoreNumber">88888888</div>
+            <div class="teamScoreNumber teamAccuracyNumber blueTeamNumber" id="blueTeamAccuracyNumber">88.88%</div>
+        </div>
     
         <!-- Score Difference -->
-        <div class="teamScoreDelta" id="teamScoreNumberDelta">888888</div>
-        <div class="teamScoreDelta" id="teamScoreAccuracyDelta">88.88%</div>
+        <div id="scoreDeltas">
+            <div class="teamScoreDelta" id="teamScoreNumberDelta">888888</div>
+            <div class="teamScoreDelta" id="teamScoreAccuracyDelta">88.88%</div>
+        </div>
 
         <!-- Score Bar -->
-        <div class="teamMovingScoreBar" id="redTeamMovingScoreBar"></div>
-        <div class="teamMovingScoreBar" id="blueTeamMovingScoreBar"></div>
+        <div id="movingScoreBars">
+            <div class="teamMovingScoreBar" id="redTeamMovingScoreBar"></div>
+            <div class="teamMovingScoreBar" id="blueTeamMovingScoreBar"></div>
+        </div>
 
         <!-- Map Box Container-->
         <div id="mapBoxContainer">
@@ -56,6 +62,11 @@
             <div>OD: <span id="songStatsOD"></span></div>
             <div>BPM: <span id="songStatsBPM"></span></div>
             <div>LEN: <span id="songStatLENs"></span></div>
+        </div>
+
+        <!-- Chat Display -->
+        <div id="chatDisplay">
+            <div id="chatDisplayContainer"></div>
         </div>
     </div>
     <div id="sideBar">
